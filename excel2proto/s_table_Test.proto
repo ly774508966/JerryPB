@@ -1,0 +1,14 @@
+import "common_scene.proto";
+
+package table;
+
+message Test
+{
+	repeated sint32 id = 1; //ID
+	optional Res num = 3 [default = GOLD]; //学号
+}
+
+message Test_ARRAY
+{
+	repeated Test rows = 1;
+}
