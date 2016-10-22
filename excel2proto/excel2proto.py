@@ -5,7 +5,9 @@ import sys
 import xlrd
 from logger import Logger
 from tableMgr import TableMgr, TableColumn
+from config import Config, UserType
 
+config = Config()
 logger = Logger(Logger.LOG_LEVEL_INFO)
 
 def ParseArg(argv):
@@ -33,7 +35,7 @@ if __name__ == '__main__':
 
     logger.info('ready')
     
-    data = xlrd.open_workbook('test.xlsx')
+    data = xlrd.open_workbook(config.table_path + 'test.xlsx')
     table = data.sheets()[0]
 
     if table.nrows < 4:

@@ -23,6 +23,9 @@ class Config(object):
         #用来辅助判非法类型
         self.normal_type = ['sint32', 'uint32', 'string', 'float']
 
+        self.table_path = '../table/'
+        self.proto_path = '../proto/'
+
     def get_user_type(self, name):
         for ut in self.user_types:
             if ut.name == name:

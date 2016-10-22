@@ -95,7 +95,7 @@ class TableMgr(object):
         else:
             return
         
-        with open('{}{}.proto'.format(outFlag, self.name), 'w') as f:
+        with open('{}{}{}.proto'.format(config.proto_path, outFlag, self.name), 'w') as f:
             for im in self.__get_import__(out_type):
                 f.write('import "{}";\n'.format(im))
             f.write('\n')
