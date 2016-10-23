@@ -83,7 +83,7 @@ if __name__ == '__main__':
         Usage()
         exit(-1)
 
-    logger.info('---------------------------------------')
+    logger.reset()
     logger.info('ready')
 
     DeleteOldProto()
