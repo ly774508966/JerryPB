@@ -1,0 +1,13 @@
+
+package table;
+
+message test
+{
+	optional sint32 id = 1; //ID
+	optional float num = 3; //学号
+}
+
+message test_ARRAY
+{
+	repeated test rows = 1;
+}

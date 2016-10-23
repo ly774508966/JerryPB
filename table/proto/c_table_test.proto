@@ -1,0 +1,14 @@
+import "common_degree.proto";
+
+package Table;
+
+message test
+{
+	optional sint32 id = 1; //ID
+	optional Common.DegreeType degree_type = 2 [default = TYPE_INVALID]; //学位证书类别
+}
+
+message test_ARRAY
+{
+	repeated test rows = 1;
+}

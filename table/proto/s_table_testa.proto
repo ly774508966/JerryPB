@@ -1,0 +1,14 @@
+import "common_degree.proto";
+
+package table;
+
+message testa
+{
+	optional sint32 id = 1; //ID
+	optional Common.DegreeQualityType degree_quality_type = 3 [default = DEGREE_INVALID]; //学位证书品质
+}
+
+message testa_ARRAY
+{
+	repeated testa rows = 1;
+}

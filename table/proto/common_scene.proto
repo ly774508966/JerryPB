@@ -1,0 +1,26 @@
+
+package Common;
+
+// 场景类型
+enum SceneType
+{
+    SCENE_TYPE_INVALID	= 0;
+    SCENE_TYPE_MAIN		= 1; //主场景
+	SCENE_TYPE_COPY		= 2; //副本
+}
+
+// 资源类型
+enum GameResType
+{    
+    GAME_RES_TYPE_INVALID       = 0; //非法
+    GAME_RES_TYPE_COIN          = 1; //铜币
+    GAME_RES_TYPE_GOLD          = 2; //金币
+}
+
+// 资源产出，消耗
+message GameRes
+{
+    optional GameResType    type        = 1 [default = GAME_RES_TYPE_INVALID];
+	optional string			des			= 2; //string
+	repeated sint64         param_list  = 3; //sint64
+}
