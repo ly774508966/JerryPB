@@ -57,9 +57,10 @@ class TableMgr(object):
         return ret
 
     def __judge_type__(self, column, col_type):
+        #注意，类型本身可能含有'.'
         if col_type.find('List.') != -1:
             column.type1 = 'repeated'
-            column.type2 = col_type.split('.')[1]
+            column.type2 = col_type.split('.',1)[1]
         else:
             column.type1 = 'optional'
             column.type2 = col_type

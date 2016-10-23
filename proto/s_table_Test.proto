@@ -1,4 +1,4 @@
-import "common_scene.proto";
+import "common_Res.proto";
 
 package table;
 
