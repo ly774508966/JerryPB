@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # encoding=utf-8
 
+import sys
 from datetime import datetime
 
 class Logger(object):
@@ -10,9 +11,17 @@ class Logger(object):
 
     def __init__(self, level):
         self.__level__ = level
+        self.__out_file__ = 1
 
     def __log__(self, level, content):
         print '{}|{}|{}'.format(datetime.now().strftime('%Y-%m-%d %I:%M:%S'), level, content)
+        if self.__out_file__ == 1:
+            saveout = sys.stdout
+            fsock = open('out.log', 'a')
+            sys.stdout = fsock
+            print '{}|{}|{}'.format(datetime.now().strftime('%Y-%m-%d %I:%M:%S'), level, content)
+            sys.stdout = saveout
+            fsock.close()
 
     def set_level(self, level):
         self.__level__ = level
