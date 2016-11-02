@@ -18,18 +18,17 @@ class MyTableTool(object):
 
 class MyTableColumn(object):
     def __init__(self):
-        self.type1 = ''
-        self.type2 = ''
+        self.idx = 0
         self.name = ''
-        self.idx = 1
         self.des = ''
-        self.use_type = self.COLUMN_TYPE_NONE
+        self.type = ''
+        self.use_type = MyTableTool.TABLE_TYPE_NONE
 
 class MyTableSheet(object):
     def __init__(self):
         self.idx = 0
         self.name = ''
-        self.type = MyTableTool.TABLE_TYPE_NONE
+        self.use_type = MyTableTool.TABLE_TYPE_NONE
         self.colums = []
 
 class MyTable(object):
