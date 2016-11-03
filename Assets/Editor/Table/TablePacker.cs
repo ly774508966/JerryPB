@@ -210,6 +210,9 @@ public class TablePacker : EditorWindow
                     bytesName = desc.outFileName;
                 }
 
+                UnityEngine.Debug.LogError(Directory.GetCurrentDirectory());
+                UnityEngine.Debug.LogError(param);
+
                 if (CallProcess("python.exe", param))
                 {
                     File.Copy(table_outputPath + bytesName + ".tbl", table_outputStreamingPath + bytesName + ".bytes", true);

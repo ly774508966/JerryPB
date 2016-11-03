@@ -14,7 +14,7 @@ public class TableLoader : Singleton<TableLoader>
     {
          new TableDesc("Scene",0,"scene","scene","scene"),//场景
          new TableDesc("Test",0,"test","test","test"),
-         new TableDesc("Testa",1,"testa","testa","test"),
+         //new TableDesc("Testa",1,"testa","testa","test"),
     };
 
     /// <summary>
