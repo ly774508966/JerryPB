@@ -1,4 +1,4 @@
-//auto generate by code at 2016-11-04 01:01:10
+//auto generate by code at 2016-11-04 01:48:50
 
 import "common_scene.proto";
 
@@ -6,11 +6,11 @@ package table;
 
 message scene
 {
-	optional sint32 id = 0; //ID
-	optional Common.SceneType scene_type = 1 [default = SCENE_TYPE_INVALID]; //类型
-	optional Common.GameRes res = 3; //产出
-	repeated uint32 num_uint32 = 4; //num_uint32
-	optional float num_float = 5; //num_float
+	optional sint32 id = 1; //ID
+	optional Common.SceneType scene_type = 2 [default = SCENE_TYPE_INVALID]; //类型
+	optional Common.GameRes res = 4; //产出
+	repeated uint32 num_uint32 = 5; //num_uint32
+	optional float num_float = 6; //num_float
 }
 
 message scene_ARRAY

@@ -1,0 +1,177 @@
+2016-11-04 02:03:18|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-04 02:03:18|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-04 02:03:18|INFO|Environs: OUTPUT_DIR = '../table_output'
+2016-11-04 02:03:18|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-04 02:03:18|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-04 02:03:18|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-04 02:03:18|INFO|['table_writer.py', '-s', '0', '-m', 'scene', '-o', 'scene', 'scene']
+2016-11-04 02:03:18|INFO|D:\GitHub\MyGit\ProtobufToolsForUnity\table\table_tools
+2016-11-04 02:03:18|INFO|Arguments: ('scene', '0', 'c_table_scene_pb2', 'scene_ARRAY', 'scene.tbl')
+2016-11-04 02:03:18|INFO|打开工作簿|scene
+2016-11-04 02:03:18|INFO|加载页签|all_scene
+2016-11-04 02:03:18|INFO|导入PB协议|c_table_scene_pb2
+2016-11-04 02:03:18|INFO|处理行数据|[10000.0, 1.0, u'unity', u'{1^lai^1^2}', u'1|2|3', 1.2]
+2016-11-04 02:03:18|INFO|解析结构|{1^lai^1^2}
+2016-11-04 02:03:18|INFO|行数据处理结果
+id: 10000
+scene_type: SCENE_TYPE_MAIN
+des: "unity"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "lai"
+  param_list: 1
+  param_list: 2
+}
+num_uint32: 1
+num_uint32: 2
+num_uint32: 3
+num_float: 1.2
+
+2016-11-04 02:03:18|INFO|处理行数据|[10001.0, 2.0, u'proto', u'{1^lahii^2^2}', 1.0, 2.1]
+2016-11-04 02:03:18|INFO|解析结构|{1^lahii^2^2}
+2016-11-04 02:03:18|INFO|行数据处理结果
+id: 10001
+scene_type: SCENE_TYPE_COPY
+des: "proto"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "lahii"
+  param_list: 2
+  param_list: 2
+}
+num_uint32: 1
+num_float: 2.1
+
+2016-11-04 02:03:18|INFO|处理行数据|[10003.0, 2.0, u'just', u'{1^proto^1^2}', u'2|3', 3.3]
+2016-11-04 02:03:18|INFO|解析结构|{1^proto^1^2}
+2016-11-04 02:03:18|INFO|行数据处理结果
+id: 10003
+scene_type: SCENE_TYPE_COPY
+des: "just"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "proto"
+  param_list: 1
+  param_list: 2
+}
+num_uint32: 2
+num_uint32: 3
+num_float: 3.3
+
+2016-11-04 02:03:18|INFO|处理行数据|[10004.0, 2.0, u'test', u'{1^lai^1^2}', 3.0, 4.5]
+2016-11-04 02:03:18|INFO|解析结构|{1^lai^1^2}
+2016-11-04 02:03:18|INFO|行数据处理结果
+id: 10004
+scene_type: SCENE_TYPE_COPY
+des: "test"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "lai"
+  param_list: 1
+  param_list: 2
+}
+num_uint32: 3
+num_float: 4.5
+
+2016-11-04 02:03:18|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-04 02:03:18|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-04 02:03:18|INFO|Environs: OUTPUT_DIR = '../table_output'
+2016-11-04 02:03:18|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-04 02:03:18|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-04 02:03:18|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-04 02:03:18|INFO|['table_writer.py', '-s', '0', '-m', 'test', '-o', 'test', 'test']
+2016-11-04 02:03:18|INFO|D:\GitHub\MyGit\ProtobufToolsForUnity\table\table_tools
+2016-11-04 02:03:18|INFO|Arguments: ('test', '0', 'c_table_test_pb2', 'test_ARRAY', 'test.tbl')
+2016-11-04 02:03:19|INFO|打开工作簿|test
+2016-11-04 02:03:19|INFO|加载页签|all_test
+2016-11-04 02:03:19|INFO|导入PB协议|c_table_test_pb2
+2016-11-04 02:03:19|INFO|处理行数据|[1.0, 1.0, 2.0, '']
+2016-11-04 02:03:19|INFO|行数据处理结果
+id: 1
+degree_type: TYPE_CHINESE
+
+2016-11-04 02:03:19|INFO|处理行数据|[2.0, 2.0, 4.0, '']
+2016-11-04 02:03:19|INFO|行数据处理结果
+id: 2
+degree_type: TYPE_MATH
+
+2016-11-04 02:03:19|INFO|处理行数据|[3.0, 3.0, 3.0, '']
+2016-11-04 02:03:19|INFO|行数据处理结果
+id: 3
+degree_type: TYPE_ENGLISH
+
+2016-11-04 02:05:21|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-04 02:05:21|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-04 02:05:21|INFO|Environs: OUTPUT_DIR = '../table_output'
+2016-11-04 02:05:21|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-04 02:05:21|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-04 02:05:21|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-04 02:05:21|INFO|['D:\\GitHub\\MyGit\\ProtobufToolsForUnity\\table\\table_tools\\table_writer.py', '-s', '0', '-m', 'scene', '-o', 'scene', 'scene']
+2016-11-04 02:05:21|INFO|D:\GitHub\MyGit\ProtobufToolsForUnity\table\table_tools
+2016-11-04 02:05:21|INFO|Arguments: ('scene', '0', 'c_table_scene_pb2', 'scene_ARRAY', 'scene.tbl')
+2016-11-04 02:05:21|INFO|打开工作簿|scene
+2016-11-04 02:05:21|INFO|加载页签|all_scene
+2016-11-04 02:05:21|INFO|导入PB协议|c_table_scene_pb2
+2016-11-04 02:05:21|INFO|处理行数据|[10000.0, 1.0, u'unity', u'{1^lai^1^2}', u'1|2|3', 1.2]
+2016-11-04 02:05:21|INFO|解析结构|{1^lai^1^2}
+2016-11-04 02:05:21|INFO|行数据处理结果
+id: 10000
+scene_type: SCENE_TYPE_MAIN
+des: "unity"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "lai"
+  param_list: 1
+  param_list: 2
+}
+num_uint32: 1
+num_uint32: 2
+num_uint32: 3
+num_float: 1.2
+
+2016-11-04 02:05:21|INFO|处理行数据|[10001.0, 2.0, u'proto', u'{1^lahii^2^2}', 1.0, 2.1]
+2016-11-04 02:05:21|INFO|解析结构|{1^lahii^2^2}
+2016-11-04 02:05:21|INFO|行数据处理结果
+id: 10001
+scene_type: SCENE_TYPE_COPY
+des: "proto"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "lahii"
+  param_list: 2
+  param_list: 2
+}
+num_uint32: 1
+num_float: 2.1
+
+2016-11-04 02:05:21|INFO|处理行数据|[10003.0, 2.0, u'just', u'{1^proto^1^2}', u'2|3', 3.3]
+2016-11-04 02:05:21|INFO|解析结构|{1^proto^1^2}
+2016-11-04 02:05:21|INFO|行数据处理结果
+id: 10003
+scene_type: SCENE_TYPE_COPY
+des: "just"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "proto"
+  param_list: 1
+  param_list: 2
+}
+num_uint32: 2
+num_uint32: 3
+num_float: 3.3
+
+2016-11-04 02:05:21|INFO|处理行数据|[10004.0, 2.0, u'test', u'{1^lai^1^2}', 3.0, 4.5]
+2016-11-04 02:05:21|INFO|解析结构|{1^lai^1^2}
+2016-11-04 02:05:21|INFO|行数据处理结果
+id: 10004
+scene_type: SCENE_TYPE_COPY
+des: "test"
+res {
+  type: GAME_RES_TYPE_COIN
+  des: "lai"
+  param_list: 1
+  param_list: 2
+}
+num_uint32: 3
+num_float: 4.5
+

@@ -1,4 +1,4 @@
-//auto generate by code at 2016-11-04 01:01:10
+//auto generate by code at 2016-11-04 01:48:50
 
 import "common_degree.proto";
 import "common_effect.proto";
@@ -7,8 +7,8 @@ package table;
 
 message test
 {
-	optional sint32 id = 0; //ID
-	optional float num = 2; //学号
+	optional sint32 id = 1; //ID
+	optional float num = 3; //学号
 }
 
 message test_ARRAY
@@ -18,8 +18,8 @@ message test_ARRAY
 
 message testa
 {
-	optional sint32 id = 0; //ID
-	optional Common.DegreeQualityType degree_quality_type = 2 [default = DEGREE_INVALID]; //学位证书品质
+	optional sint32 id = 1; //ID
+	optional Common.DegreeQualityType degree_quality_type = 3 [default = DEGREE_INVALID]; //学位证书品质
 }
 
 message testa_ARRAY

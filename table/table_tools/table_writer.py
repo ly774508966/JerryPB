@@ -14,49 +14,11 @@ import xlrd
 import google
 import traceback
 from datetime import datetime
+from logger import Logger
 
 DEBUG_MODE = False
 
-#================================================#
-#################### 日志模块 ####################
-#================================================#
-class Logger(object):
-    LOG_LEVEL_ERROR = 5
-    LOG_LEVEL_WARN  = 4
-    LOG_LEVEL_INFO  = 3
-    LOG_LEVEL_DEBUG = 2
-    LOG_LEVEL_TRACE = 1
-
-    def __init__(self, level):
-        self.__level__ = level
-
-    def __log__(self, level, content):
-        print datetime.now().strftime('%Y-%m-%d %I:%M:%S')  + '|' + level + '|' + content
-
-    def set_level(self, level):
-        self.__level__ = level
-
-    def error(self, content):
-        if self.__level__ <= self.LOG_LEVEL_ERROR:
-            self.__log__('ERROR', content)
-
-    def warn(self, content):
-        if self.__level__ <= self.LOG_LEVEL_WARN:
-            self.__log__('WARN', content)
-
-    def info(self, content):
-        if self.__level__ <= self.LOG_LEVEL_INFO:
-            self.__log__('INFO', content)
-
-    def debug(self, content):
-        if self.__level__ <= self.LOG_LEVEL_DEBUG:
-            self.__log__('DEBUG', content)
-
-    def trace(self, content):
-        if self.__level__ <= self.LOG_LEVEL_TRACE:
-            self.__log__('TRACE', content)
-
-logger = Logger(Logger.LOG_LEVEL_DEBUG)
+logger = Logger(Logger.LOG_LEVEL_INFO, 'writer')
 
 #================================================#
 #################### 配置模块 ####################
@@ -70,7 +32,7 @@ class Config(object):
         self.workbook_dir           = '../table'
         self.proto_dir              = '../proto'
         self.output_dir             = '../table_output'
-        self.default_proto_prefix   = 'table_'
+        self.default_proto_prefix   = 'c_table_'
         self.default_output_prefix  = ''
         self.default_output_suffix  = 'tbl'
 
@@ -92,12 +54,12 @@ class Config(object):
         if os.environ.get('DEFAULT_OUTPUT_SUFFIX') != None:
             self.default_output_suffix = os.environ.get('DEFAULT_OUTPUT_SUFFIX');
 
-        logger.trace('Environs: WORKBOOK_DIR = \'%s\'' % self.workbook_dir)
-        logger.trace('Environs: PROTO_DIR = \'%s\'' % self.proto_dir)
-        logger.trace('Environs: OUTPUT_DIR = \'%s\'' % self.output_dir)
-        logger.trace('Environs: DEFAULT_PROTO_PREFIX = \'%s\'' % self.default_proto_prefix)
-        logger.trace('Environs: DEFAULT_OUTPUT_PREFIX = \'%s\'' % self.default_output_prefix)
-        logger.trace('Environs: DEFAULT_OUTPUT_SUFFIX = \'%s\'' % self.default_output_suffix)
+        logger.info('Environs: WORKBOOK_DIR = \'%s\'' % self.workbook_dir)
+        logger.info('Environs: PROTO_DIR = \'%s\'' % self.proto_dir)
+        logger.info('Environs: OUTPUT_DIR = \'%s\'' % self.output_dir)
+        logger.info('Environs: DEFAULT_PROTO_PREFIX = \'%s\'' % self.default_proto_prefix)
+        logger.info('Environs: DEFAULT_OUTPUT_PREFIX = \'%s\'' % self.default_output_prefix)
+        logger.info('Environs: DEFAULT_OUTPUT_SUFFIX = \'%s\'' % self.default_output_suffix)
 
 config = Config()
 
@@ -145,7 +107,7 @@ class TableWriter(object):
         except IOError:
             path = config.workbook_dir + '/' + workbook + '.xls'
             self.workbook = xlrd.open_workbook(path)
-        logger.trace('打开工作簿|%s' % workbook)
+        logger.info('打开工作簿|%s' % workbook)
 
         # 打开页签
         if type(sheet) == int or (type(sheet) == str and sheet.isdigit()):
@@ -154,13 +116,13 @@ class TableWriter(object):
             self.sheet = self.workbook.sheet_by_name(sheet)
         else:
             raise TypeError, '工作簿页签参数类型错误'
-        logger.trace('加载页签|%s' % self.sheet.name.encode('utf8'))
+        logger.info('加载页签|%s' % self.sheet.name.encode('utf8'))
 
         # 加载PB协议模块
         if config.proto_dir not in sys.path:
             sys.path.append(config.proto_dir)
         self.pb2 = __import__(pb2)
-        logger.trace('导入PB协议|%s' % pb2)
+        logger.info('导入PB协议|%s' % pb2)
 
         # 表格行存储
         self.row_array = getattr(self.pb2, array)()
@@ -194,7 +156,7 @@ class TableWriter(object):
         f.close()
 
     def deal_row_values(self, row_values):
-        logger.trace('处理行数据|%s' % str(row_values))
+        logger.info('处理行数据|%s' % str(row_values))
 
         row = self.row_array.rows.add()
         for descriptor in self.row_descriptor.fields:
@@ -222,7 +184,7 @@ class TableWriter(object):
                             descriptor.number))
                     raise e
 
-        logger.trace('行数据处理结果\n%s' % str(row))
+        logger.info('行数据处理结果\n%s' % str(row))
 
     def deal_field_value(self, row, descriptor, value):
         if descriptor.type != descriptor.TYPE_MESSAGE:
@@ -246,7 +208,7 @@ class TableWriter(object):
                 self.deal_struct(getattr(row, descriptor.name), value)
 
     def deal_struct(self, struct, value):
-        logger.trace('解析结构|%s' % value.encode('utf8'))
+        logger.info('解析结构|%s' % value.encode('utf8'))
 
         value = value.strip()
 
@@ -355,6 +317,7 @@ def ParseArg(argv):
             if proto != None:
                 return False, None
             idx += 1; proto = argv[idx] + '_pb2'
+            logger.info('hi')
 
         elif arg == '-m':
             if proto_message != None:
@@ -405,6 +368,8 @@ if __name__ == '__main__':
     if not os.path.exists(config.output_dir):
         os.makedirs(config.output_dir)
 
+    logger.info(sys.argv)
+    
     success, args = ParseArg(sys.argv)
     if not success:
         Usage(sys.argv[0])
@@ -413,8 +378,8 @@ if __name__ == '__main__':
     print '======================================================='
     print '******************** Dumping Table ********************'
     print '======================================================='
-    
-    logger.trace('Arguments: ' + str(args))
 
+    logger.info(os.getcwd())
+    logger.info('Arguments: ' + str(args))
     TableWriter(*args[:-1])(args[-1])
-
+    

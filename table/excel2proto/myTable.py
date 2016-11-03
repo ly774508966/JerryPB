@@ -132,7 +132,7 @@ class MyTableSheet(object):
         self.columns = []
 
         for i in range(excel_sheet.ncols):
-            column = MyTableColumn(excel_sheet.col_values(i), i)
+            column = MyTableColumn(excel_sheet.col_values(i), i+1)
             if column.use_type != MyTableTool.USE_TYPE_NONE:
                 self.columns.append(column)
 
