@@ -20,3 +20,4 @@ if __name__ == '__main__':
     print 'start'
 
     table = MyTable('../table/test.xlsx')
+    table.to_proto()
