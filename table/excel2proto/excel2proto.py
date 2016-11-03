@@ -4,8 +4,8 @@
 import sys, os
 import xlrd
 from logger import Logger
-from tableMgr import TableMgr, TableColumn
-from config import Config, UserType
+from myTable import MyTable, MyTableTool
+from config import Config
 
 config = Config()
 logger = Logger(Logger.LOG_LEVEL_INFO)
@@ -33,45 +33,9 @@ def HandleExcels():
     for parent, dirnames, filenames in os.walk(config.table_path):
         for filename in filenames:
             if filename.find('.xlsx') != -1:
-                HandleOneExcel(filename)
-
-def HandleOneExcel(path):
-    logger.info('handle excel : ' + path)
-    
-    data = xlrd.open_workbook(config.table_path + path)
-    
-    for i in range(len(data.sheets())):
-        table = data.sheets()[i]
-        HandleOneSheet(table)
-    
-def HandleOneSheet(table):
-
-    if table.name.find('_') == -1:
-        return
-
-    sheet_name = table.name.split('_', 1)[1]
-    sheet_type = TableMgr.get_use_type(table.name.split('_', 1)[0])
-    if sheet_type == TableColumn.COLUMN_TYPE_NONE:
-        return
-    
-    if table.nrows < 4:
-        logger.error('less 4 rows')
-    else:
-        pass
-
-    #logger.info('row:{} col:{}'.format(table.nrows, table.ncols))
-
-    tableMgr = TableMgr(sheet_name, sheet_type)
-    
-    for i in range(table.ncols):
-        col_type = ToUnicode(table.cell(0,i).value)
-        col_name = ToUnicode(table.cell(1,i).value)
-        col_use_type = ToUnicode(table.cell(2,i).value)
-        col_des = ToUnicode(table.cell(3,i).value)
-        col_idx = i + 1
-        tableMgr.add_column(col_type, col_name, col_des, col_use_type, col_idx)
-    tableMgr.out_file(TableColumn.COLUMN_TYPE_CLIENT)
-    tableMgr.out_file(TableColumn.COLUMN_TYPE_SERVER)
+                table = MyTable(parent + filename)
+                table.to_proto(MyTableTool.USE_TYPE_CLIENT)
+                table.to_proto(MyTableTool.USE_TYPE_SERVER)
 
 if __name__ == '__main__':
 
