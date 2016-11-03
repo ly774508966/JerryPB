@@ -115,6 +115,7 @@ public class TablePacker : EditorWindow
     private static bool ProcessProto(string name, string path)
     {
         string param = string.Format("-i:{0}.proto -o:{0}.cs -p:detectMissing", name);
+        UnityEngine.Debug.LogError(param + " " + path);
         if (CallProcess("protogen.exe", param))
         {
             if (!Directory.Exists(dir + path))
