@@ -6,7 +6,7 @@ from datetime import datetime
 from logger import Logger
 from config import Config
 
-logger = Logger(Logger.LOG_LEVEL_INFO, 'myTable')
+logger = Logger(Logger.LOG_LEVEL_INFO, 'excel2proto')
 config = Config()
 
 class MyType(object):
@@ -272,6 +272,18 @@ class MyTable(object):
 
         if is_to_cs == True:
             self.to_cs(use_type)
+            #self.to_data(use_type)
+
+    def to_data(self, use_type):
+        table_prefix = ''
+        if use_type == MyTableTool.USE_TYPE_CLIENT:
+            table_prefix = config.client_table_prefix
+        else:
+            table_prefix = config.server_table_prefix
+
+        for sheet in self.sheets:
+            if sheet.use_type == use_type or sheet.use_type == MyTableTool.USE_TYPE_ALL:
+                os.system('table_writer.py -s {} -p {} -m {} -o {} {}'.format(sheet.idx, self.name, sheet.name, table_prefix + sheet.name, self.name))
 
     def to_cs(self, use_type):
         table_prefix = ''

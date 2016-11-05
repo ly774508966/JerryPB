@@ -8,7 +8,7 @@ from myTable import MyTable, MyTableTool
 from config import Config
 
 config = Config()
-logger = Logger(Logger.LOG_LEVEL_INFO)
+logger = Logger(Logger.LOG_LEVEL_INFO, 'excel2proto')
 
 def ParseArg(argv):
     if len(argv) < 1:
@@ -32,10 +32,10 @@ def DeleteOldProto():
 def HandleExcels():
     for parent, dirnames, filenames in os.walk(config.table_path):
         for filename in filenames:
-            if filename.find('.xlsx') != -1:
+            if filename.find('.xlsx') != -1 and filename.find('scene') != -1:
                 table = MyTable(parent + filename)
                 table.to_proto(MyTableTool.USE_TYPE_CLIENT)
-                table.to_proto(MyTableTool.USE_TYPE_SERVER)
+                #table.to_proto(MyTableTool.USE_TYPE_SERVER)
 
 if __name__ == '__main__':
 

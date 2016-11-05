@@ -31,7 +31,7 @@ class Config(object):
         # 全局的位置定义
         self.workbook_dir           = '../table'
         self.proto_dir              = '../proto'
-        self.output_dir             = '../table_output'
+        self.output_dir             = '../table_output/table_data'
         self.default_proto_prefix   = 'c_table_'
         self.default_output_prefix  = ''
         self.default_output_suffix  = 'tbl'

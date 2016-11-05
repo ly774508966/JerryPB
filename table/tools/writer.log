@@ -1,0 +1,96 @@
+2016-11-05 06:07:07|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:07:07|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:07:07|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:07:07|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:07:07|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:07:07|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:07:07|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '0', '-p', 'scene', '-m', 'scene', '-o', 'c_table_scene', 'scene']
+2016-11-05 06:07:07|INFO|hi
+2016-11-05 06:07:07|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:07:07|INFO|Arguments: ('scene', '0', 'scene_pb2', 'scene_ARRAY', 'c_table_scene.tbl')
+2016-11-05 06:07:07|INFO|打开工作簿|scene
+2016-11-05 06:07:07|INFO|加载页签|all_scene
+2016-11-05 06:07:08|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:07:08|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:07:08|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:07:08|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:07:08|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:07:08|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:07:08|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '0', '-p', 'scene', '-m', 'scene', '-o', 's_table_scene', 'scene']
+2016-11-05 06:07:08|INFO|hi
+2016-11-05 06:07:08|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:07:08|INFO|Arguments: ('scene', '0', 'scene_pb2', 'scene_ARRAY', 's_table_scene.tbl')
+2016-11-05 06:07:08|INFO|打开工作簿|scene
+2016-11-05 06:07:08|INFO|加载页签|all_scene
+2016-11-05 06:07:09|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:07:09|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:07:09|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:07:09|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:07:09|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:07:09|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:07:09|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '0', '-p', 'test', '-m', 'test', '-o', 'c_table_test', 'test']
+2016-11-05 06:07:09|INFO|hi
+2016-11-05 06:07:09|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:07:09|INFO|Arguments: ('test', '0', 'test_pb2', 'test_ARRAY', 'c_table_test.tbl')
+2016-11-05 06:07:09|INFO|打开工作簿|test
+2016-11-05 06:07:09|INFO|加载页签|all_test
+2016-11-05 06:07:09|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:07:09|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:07:09|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:07:09|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:07:09|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:07:09|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:07:09|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '1', '-p', 'test', '-m', 'testa', '-o', 'c_table_testa', 'test']
+2016-11-05 06:07:09|INFO|hi
+2016-11-05 06:07:09|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:07:09|INFO|Arguments: ('test', '1', 'test_pb2', 'testa_ARRAY', 'c_table_testa.tbl')
+2016-11-05 06:07:09|INFO|打开工作簿|test
+2016-11-05 06:07:09|INFO|加载页签|all_testa
+2016-11-05 06:07:10|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:07:10|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:07:10|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:07:10|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:07:10|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:07:10|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:07:10|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '0', '-p', 'test', '-m', 'test', '-o', 's_table_test', 'test']
+2016-11-05 06:07:10|INFO|hi
+2016-11-05 06:07:10|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:07:10|INFO|Arguments: ('test', '0', 'test_pb2', 'test_ARRAY', 's_table_test.tbl')
+2016-11-05 06:07:10|INFO|打开工作簿|test
+2016-11-05 06:07:10|INFO|加载页签|all_test
+2016-11-05 06:07:10|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:07:10|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:07:10|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:07:10|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:07:10|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:07:10|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:07:10|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '1', '-p', 'test', '-m', 'testa', '-o', 's_table_testa', 'test']
+2016-11-05 06:07:10|INFO|hi
+2016-11-05 06:07:10|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:07:10|INFO|Arguments: ('test', '1', 'test_pb2', 'testa_ARRAY', 's_table_testa.tbl')
+2016-11-05 06:07:10|INFO|打开工作簿|test
+2016-11-05 06:07:10|INFO|加载页签|all_testa
+2016-11-05 06:08:09|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:08:09|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:08:09|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:08:09|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:08:09|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:08:09|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:08:09|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '0', '-p', 'scene', '-m', 'scene', '-o', 'c_table_scene', 'scene']
+2016-11-05 06:08:09|INFO|hi
+2016-11-05 06:08:09|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:08:09|INFO|Arguments: ('scene', '0', 'scene_pb2', 'scene_ARRAY', 'c_table_scene.tbl')
+2016-11-05 06:08:09|INFO|打开工作簿|scene
+2016-11-05 06:08:09|INFO|加载页签|all_scene
+2016-11-05 06:08:16|INFO|Environs: WORKBOOK_DIR = '../table'
+2016-11-05 06:08:16|INFO|Environs: PROTO_DIR = '../proto'
+2016-11-05 06:08:16|INFO|Environs: OUTPUT_DIR = '../table_output/table_data'
+2016-11-05 06:08:16|INFO|Environs: DEFAULT_PROTO_PREFIX = 'c_table_'
+2016-11-05 06:08:16|INFO|Environs: DEFAULT_OUTPUT_PREFIX = ''
+2016-11-05 06:08:16|INFO|Environs: DEFAULT_OUTPUT_SUFFIX = 'tbl'
+2016-11-05 06:08:16|INFO|['E:\\MyWork\\ProtobufToolsForUnity\\table\\tools\\table_writer.py', '-s', '0', '-p', 'scene', '-m', 'scene', '-o', 'c_table_scene', 'scene']
+2016-11-05 06:08:16|INFO|hi
+2016-11-05 06:08:16|INFO|E:\MyWork\ProtobufToolsForUnity\table\tools
+2016-11-05 06:08:16|INFO|Arguments: ('scene', '0', 'scene_pb2', 'scene_ARRAY', 'c_table_scene.tbl')
+2016-11-05 06:08:16|INFO|打开工作簿|scene
+2016-11-05 06:08:16|INFO|加载页签|all_scene
