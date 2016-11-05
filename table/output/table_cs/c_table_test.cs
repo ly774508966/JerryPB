@@ -21,9 +21,9 @@ namespace Table
     
 
     private int? _id;
-	/// <summary>
-	/// ID
-	/// </summary>
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
@@ -42,9 +42,9 @@ namespace Table
     
 
     private Common.DegreeType? _degree_type;
-	/// <summary>
-	/// 学位证书类别
-	/// </summary>
+    /// <summary>
+    /// 学位证书类别
+    /// </summary>
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"degree_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public Common.DegreeType degree_type
     {
@@ -90,9 +90,9 @@ namespace Table
     
 
     private int? _id;
-	/// <summary>
-	/// ID
-	/// </summary>
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
@@ -111,9 +111,9 @@ namespace Table
     
 
     private Common.Effect _name = null;
-	/// <summary>
-	/// 姓名
-	/// </summary>
+    /// <summary>
+    /// 姓名
+    /// </summary>
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"name", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
     public Common.Effect name
@@ -123,9 +123,9 @@ namespace Table
     }
 
     private Common.DegreeQualityType? _degree_quality_type;
-	/// <summary>
-	/// 学位证书品质
-	/// </summary>
+    /// <summary>
+    /// 学位证书品质
+    /// </summary>
     [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"degree_quality_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public Common.DegreeQualityType degree_quality_type
     {

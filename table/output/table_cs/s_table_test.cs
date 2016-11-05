@@ -21,9 +21,9 @@ namespace table
     
 
     private int? _id;
-	/// <summary>
-	/// ID
-	/// </summary>
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
@@ -42,9 +42,9 @@ namespace table
     
 
     private float? _num;
-	/// <summary>
-	/// 学号
-	/// </summary>
+    /// <summary>
+    /// 学号
+    /// </summary>
     [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"num", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float num
     {
@@ -90,9 +90,9 @@ namespace table
     
 
     private int? _id;
-	/// <summary>
-	/// ID
-	/// </summary>
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
@@ -111,9 +111,9 @@ namespace table
     
 
     private Common.DegreeQualityType? _degree_quality_type;
-	/// <summary>
-	/// 学位证书品质
-	/// </summary>
+    /// <summary>
+    /// 学位证书品质
+    /// </summary>
     [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"degree_quality_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public Common.DegreeQualityType degree_quality_type
     {

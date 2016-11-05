@@ -20,9 +20,9 @@ namespace table
     
 
     private int? _id;
-	/// <summary>
-	/// ID
-	/// </summary>
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
@@ -41,9 +41,9 @@ namespace table
     
 
     private Common.SceneType? _scene_type;
-	/// <summary>
-	/// 类型
-	/// </summary>
+    /// <summary>
+    /// 类型
+    /// </summary>
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"scene_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public Common.SceneType scene_type
     {
@@ -62,9 +62,9 @@ namespace table
     
 
     private Common.GameRes _res = null;
-	/// <summary>
-	/// 产出
-	/// </summary>
+    /// <summary>
+    /// 产出
+    /// </summary>
     [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"res", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
     public Common.GameRes res
@@ -81,9 +81,9 @@ namespace table
   
 
     private float? _num_float;
-	/// <summary>
-	/// num_float
-	/// </summary>
+    /// <summary>
+    /// num_float
+    /// </summary>
     [global::ProtoBuf.ProtoMember(6, IsRequired = false, Name=@"num_float", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float num_float
     {

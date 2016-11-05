@@ -13,7 +13,7 @@ public class TableLoader : Singleton<TableLoader>
     public List<TableDesc> tableDescList = new List<TableDesc>
     {
          new TableDesc("Scene",0,"scene","scene","scene"),//场景
-         new TableDesc("Test",0,"test","test","test"),
+         //new TableDesc("Test",0,"test","test","test"),
          //new TableDesc("Testa",1,"testa","testa","test"),
     };
 

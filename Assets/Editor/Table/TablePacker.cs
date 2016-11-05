@@ -150,7 +150,7 @@ public class TablePacker : EditorWindow
 
         tablePath = dir + string.Format(@"\{0}\table\", m_strTableFileName);
         table_outputPath = dir + string.Format(@"\{0}\table_output\", m_strTableFileName);
-        table_toolsPath = dir + string.Format(@"\{0}\table_tools\", m_strTableFileName);
+        table_toolsPath = dir + string.Format(@"\{0}\tools\", m_strTableFileName);
         protoPath = dir + string.Format(@"\{0}\proto\", m_strTableFileName);
 
         //本地化内容收集文件

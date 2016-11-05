@@ -18,7 +18,7 @@ from logger import Logger
 
 DEBUG_MODE = False
 
-logger = Logger(Logger.LOG_LEVEL_INFO, 'writer')
+logger = Logger(Logger.LOG_LEVEL_WARN, 'writer')
 
 #================================================#
 #################### 配置模块 ####################
@@ -31,7 +31,7 @@ class Config(object):
         # 全局的位置定义
         self.workbook_dir           = '../table'
         self.proto_dir              = '../proto'
-        self.output_dir             = '../table_output/table_data'
+        self.output_dir             = '../output/table_data'
         self.default_proto_prefix   = 'c_table_'
         self.default_output_prefix  = ''
         self.default_output_suffix  = 'tbl'
@@ -54,12 +54,12 @@ class Config(object):
         if os.environ.get('DEFAULT_OUTPUT_SUFFIX') != None:
             self.default_output_suffix = os.environ.get('DEFAULT_OUTPUT_SUFFIX');
 
-        logger.info('Environs: WORKBOOK_DIR = \'%s\'' % self.workbook_dir)
-        logger.info('Environs: PROTO_DIR = \'%s\'' % self.proto_dir)
-        logger.info('Environs: OUTPUT_DIR = \'%s\'' % self.output_dir)
-        logger.info('Environs: DEFAULT_PROTO_PREFIX = \'%s\'' % self.default_proto_prefix)
-        logger.info('Environs: DEFAULT_OUTPUT_PREFIX = \'%s\'' % self.default_output_prefix)
-        logger.info('Environs: DEFAULT_OUTPUT_SUFFIX = \'%s\'' % self.default_output_suffix)
+        #logger.info('Environs: WORKBOOK_DIR = \'%s\'' % self.workbook_dir)
+        #logger.info('Environs: PROTO_DIR = \'%s\'' % self.proto_dir)
+        #logger.info('Environs: OUTPUT_DIR = \'%s\'' % self.output_dir)
+        #logger.info('Environs: DEFAULT_PROTO_PREFIX = \'%s\'' % self.default_proto_prefix)
+        #logger.info('Environs: DEFAULT_OUTPUT_PREFIX = \'%s\'' % self.default_output_prefix)
+        #logger.info('Environs: DEFAULT_OUTPUT_SUFFIX = \'%s\'' % self.default_output_suffix)
 
 config = Config()
 
@@ -116,13 +116,13 @@ class TableWriter(object):
             self.sheet = self.workbook.sheet_by_name(sheet)
         else:
             raise TypeError, '工作簿页签参数类型错误'
-        logger.info('加载页签|%s' % self.sheet.name.encode('utf8'))
+        #logger.info('加载页签|%s' % self.sheet.name.encode('utf8'))
 
         # 加载PB协议模块
         if config.proto_dir not in sys.path:
             sys.path.append(config.proto_dir)
         self.pb2 = __import__(pb2)
-        logger.info('导入PB协议|%s' % pb2)
+        #logger.info('导入PB协议|%s' % pb2)
 
         # 表格行存储
         self.row_array = getattr(self.pb2, array)()
@@ -184,7 +184,9 @@ class TableWriter(object):
                             descriptor.number))
                     raise e
 
-        logger.info('行数据处理结果\n%s' % str(row))
+        print row
+        #logger.info(row)
+        #logger.info('行数据处理结果\n%s' % str(row))
 
     def deal_field_value(self, row, descriptor, value):
         if descriptor.type != descriptor.TYPE_MESSAGE:
@@ -208,7 +210,7 @@ class TableWriter(object):
                 self.deal_struct(getattr(row, descriptor.name), value)
 
     def deal_struct(self, struct, value):
-        logger.info('解析结构|%s' % value.encode('utf8'))
+        #logger.info('解析结构|%s' % value.encode('utf8'))
 
         value = value.strip()
 
@@ -317,7 +319,6 @@ def ParseArg(argv):
             if proto != None:
                 return False, None
             idx += 1; proto = argv[idx] + '_pb2'
-            logger.info('hi')
 
         elif arg == '-m':
             if proto_message != None:
@@ -365,21 +366,20 @@ def ParseArg(argv):
 
 if __name__ == '__main__':
 
+    logger.reset()
+    
     if not os.path.exists(config.output_dir):
         os.makedirs(config.output_dir)
 
-    logger.info(sys.argv)
-    
     success, args = ParseArg(sys.argv)
     if not success:
         Usage(sys.argv[0])
         exit(-1)
 
-    print '======================================================='
+    #print '======================================================='
     print '******************** Dumping Table ********************'
-    print '======================================================='
+    #print '======================================================='
 
-    logger.info(os.getcwd())
     logger.info('Arguments: ' + str(args))
     TableWriter(*args[:-1])(args[-1])
     

@@ -112,7 +112,7 @@ class MyTableColumn(object):
         return ret
 
     def get_cs_des(self):
-        return '\t/// <summary>\n\t/// {}\n\t/// </summary>'.format(self.des)
+        return '    /// <summary>\n    /// {}\n    /// </summary>'.format(self.des)
     
     def get_cs_type(self):
         tname = self.type.name
@@ -272,7 +272,6 @@ class MyTable(object):
 
         if is_to_cs == True:
             self.to_cs(use_type)
-            #self.to_data(use_type)
 
     def to_data(self, use_type):
         table_prefix = ''
@@ -283,7 +282,7 @@ class MyTable(object):
 
         for sheet in self.sheets:
             if sheet.use_type == use_type or sheet.use_type == MyTableTool.USE_TYPE_ALL:
-                os.system('table_writer.py -s {} -p {} -m {} -o {} {}'.format(sheet.idx, self.name, sheet.name, table_prefix + sheet.name, self.name))
+                os.system('table_writer.py -s {} -p {} -m {} -o {} {}'.format(sheet.idx, table_prefix + self.name, sheet.name, table_prefix + sheet.name, self.name))
 
     def to_cs(self, use_type):
         table_prefix = ''

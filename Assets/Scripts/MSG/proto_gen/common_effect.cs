@@ -25,7 +25,7 @@ namespace Common
       get { return _type?? Common.EffectType.EFFECT_TYPE_INVALID; }
       set { _type = value; }
     }
-    [global::System.Xml.Serialization.XmlIgnore]
+    //Here has been replaced by XXMMLLDeleter
     [global::System.ComponentModel.Browsable(false)]
     public bool typeSpecified
     {
@@ -43,7 +43,7 @@ namespace Common
       get { return _val?? default(float); }
       set { _val = value; }
     }
-    [global::System.Xml.Serialization.XmlIgnore]
+    //Here has been replaced by XXMMLLDeleter
     [global::System.ComponentModel.Browsable(false)]
     public bool valSpecified
     {
