@@ -18,7 +18,7 @@ from logger import Logger
 
 DEBUG_MODE = False
 
-logger = Logger(Logger.LOG_LEVEL_WARN, 'writer')
+logger = Logger(Logger.LEVEL_ERROR, 'table_tools')
 
 #================================================#
 #################### 配置模块 ####################
@@ -365,8 +365,6 @@ def ParseArg(argv):
     return True, (workbook, sheet, proto, proto_message_array, output)
 
 if __name__ == '__main__':
-
-    logger.reset()
     
     if not os.path.exists(config.output_dir):
         os.makedirs(config.output_dir)
