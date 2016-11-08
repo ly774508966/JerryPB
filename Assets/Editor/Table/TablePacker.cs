@@ -140,6 +140,24 @@ public class TablePacker : EditorWindow
         CallProcess("protoc.exe", param);
     }
 
+    [MenuItem("Assets/NewPack")]
+    public static void NewPack()
+    {
+        dir = Directory.GetCurrentDirectory();
+        string toolsPath = dir + string.Format(@"\{0}\tools\", m_strTableFileName);
+        try
+        {
+            Directory.SetCurrentDirectory(toolsPath);
+            CallProcess("python.exe", toolsPath + "run.py");
+            Directory.SetCurrentDirectory(dir);
+        }
+        catch (System.Exception ex)
+        {
+            UnityEngine.Debug.LogError(ex);
+            Directory.SetCurrentDirectory(dir);
+        }
+    }
+
     /// <summary>
     /// 表格打成二进制文件
     /// </summary>
