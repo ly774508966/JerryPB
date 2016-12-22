@@ -325,7 +325,7 @@ class MyTable(object):
 
         cs_path = '{}{}{}.cs'.format(config.table_cs_path + '/', table_prefix, self.name)
 
-        self.delete_xml(cs_path)
+        Config.delete_xml(cs_path)
         self.add_des_to_cs(cs_path)
 
     def add_des_to_cs(self, cs_path):
@@ -379,14 +379,3 @@ class MyTable(object):
             return -1
         else:
             return idx + idx2 - 1
-            
-    def delete_xml(self, cs_path):
-        text = ''
-        pattern = '[global::System.Xml.Serialization.XmlIgnore]'
-        target = '//Here has been deleted XmlIgnore'
-        with open(cs_path, 'r') as f:
-            text = f.read()
-        if text.count(pattern) > 0:
-            with open(cs_path,'w') as f:
-                text = text.replace(pattern, target)
-                f.write(text)

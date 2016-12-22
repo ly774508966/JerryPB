@@ -23,9 +23,32 @@ class TaskInfo():
         self.use_type = use_type
 
 def ParseArg(argv):
+    use_type = MyTableTool.USE_TYPE_NONE
     if len(argv) < 1:
         return False, None
-    return True, argv
+    elif len(argv) == 1:
+        file_name = argv[0]
+        file_name = os.path.split(file_name)[1]
+        file_name = file_name.split('.')[0]
+
+        file_names = file_name = file_name.split('_', 1)
+        if len(file_names) != 2:
+            return True, [use_type]
+
+        file_name = file_names[1]
+        pars = file_name.split('_')
+        
+        for p in pars:
+            ps = p.split('-')
+            if len(ps) == 2:
+                if ps[0] == 'type':
+                    if ps[1] == 'all':
+                        use_type = MyTableTool.USE_TYPE_ALL
+                    elif ps[1] == 'client':
+                        use_type = MyTableTool.USE_TYPE_CLIENT
+                    elif ps[1] == 'server':
+                        use_type = MyTableTool.USE_TYPE_SERVER
+    return True, [use_type]
 
 def Usage():
     print 'this is Usage()'
@@ -128,9 +151,8 @@ class ThreadHandleTable(threading.Thread):
                 continue
             
 def RunSync(use_type):
-    CleanOutput(use_type)
     FindTables(use_type, 0)
-
+    
     work_path = os.getcwd()
     os.chdir(config.proto_path)
     for t in tables:
@@ -141,7 +163,6 @@ def RunSync(use_type):
             t.to_cs(MyTableTool.USE_TYPE_SERVER)
             t.modify_cs(MyTableTool.USE_TYPE_SERVER)
     
-    Config.generate_proto_py_file('common_*')
     if use_type == MyTableTool.USE_TYPE_CLIENT or use_type == MyTableTool.USE_TYPE_ALL:
         Config.generate_proto_py_file('c_table_*')
     if use_type == MyTableTool.USE_TYPE_SERVER or use_type == MyTableTool.USE_TYPE_ALL:
@@ -160,10 +181,9 @@ def RunAsync(use_type):
         t = ThreadHandleTable(use_type, ThreadHandleTable.F_PROTO, que_table_path, que_table_path)
         t.setDaemon(True)
         t.start()
-    
-    FindTables(use_type, 1)
-    CleanOutput(use_type)
 
+    FindTables(use_type, 1)
+    
     que_table_path.join()
     
     work_path = os.getcwd()
@@ -174,7 +194,6 @@ def RunAsync(use_type):
         t.setDaemon(True)
         t.start()
     
-    Config.generate_proto_py_file('common_*')
     if use_type == MyTableTool.USE_TYPE_CLIENT or use_type == MyTableTool.USE_TYPE_ALL:
         Config.generate_proto_py_file('c_table_*')
     if use_type == MyTableTool.USE_TYPE_SERVER or use_type == MyTableTool.USE_TYPE_ALL:
@@ -191,26 +210,56 @@ def RunAsync(use_type):
     que_modify_cs.join()
     que_to_data.join()
 
-if __name__ == '__main__':
+def CommonProto2CS():
+    work_path = os.getcwd()
+    os.chdir(config.proto_path)
+    
+    DeleteFile(config.common_cs_path, '.cs')
+    Config.generate_proto_py_file('common_*')
+    
+    list = os.listdir(config.proto_path)
+    for filename in list:
+        if filename.find('.proto') != -1 and filename.startswith('common_'):
+            filenameWithoutExtension = os.path.splitext(filename)[0]
+            proto_name = '{}.proto'.format(filenameWithoutExtension)
+            cs_path = '{}{}.cs'.format(config.common_cs_path + '/', filenameWithoutExtension)
+            Config.proto_to_cs(proto_name, cs_path)
+            Config.delete_xml(cs_path)
 
+    os.chdir(work_path)
+
+if __name__ == '__main__':
     start_time = time.time()
     
     reload(sys)
     sys.setdefaultencoding('utf-8')
-    
+
     success, args = ParseArg(sys.argv)
     if not success:
         Usage()
         exit(-1)
 
-    use_type = MyTableTool.USE_TYPE_ALL
-
     logger.reset()
-    logger.info('ready')
 
-    CleanProto(use_type)
+    use_type = args[0]
 
-    #RunSync(use_type)
-    RunAsync(use_type)
+    str_use_type = 'None'
+    if use_type == MyTableTool.USE_TYPE_CLIENT:
+        str_use_type = 'Client'
+    elif use_type == MyTableTool.USE_TYPE_ALL:
+        str_use_type = 'All'
+    elif use_type == MyTableTool.USE_TYPE_SERVER:
+        str_use_type = 'Server'
+    elif use_type == MyTableTool.USE_TYPE_NONE:
+        str_use_type = 'None'
+    logger.info('ready type=' + str_use_type)
+
+    if use_type != MyTableTool.USE_TYPE_NONE:
+        CleanProto(use_type)
+        CleanOutput(use_type)
+        CommonProto2CS()
+    
+        #RunSync(use_type)
+        RunAsync(use_type)
 
     logger.error('finish useTime:' + str(time.time() - start_time))
