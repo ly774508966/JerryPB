@@ -4,8 +4,7 @@ package Common;
 
 enum EffectType
 {
-    EFFECT_TYPE_INVALID         = 0;
-
+    EFFECT_TYPE_INVALID         	= 0;
     EFFECT_TYPE_ABSOLUTE_MAX_HP     = 101;
     EFFECT_TYPE_ABSOLUTE_CATK       = 102;
     EFFECT_TYPE_ABSOLUTE_CDEF       = 103;

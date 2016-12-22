@@ -12,9 +12,7 @@ public class TableLoader : Singleton<TableLoader>
     /// </summary>
     public List<TableDesc> tableDescList = new List<TableDesc>
     {
-         new TableDesc("Scene",0,"scene","scene","scene"),//场景
-         //new TableDesc("Test",0,"test","test","test"),
-         //new TableDesc("Testa",1,"testa","testa","test"),
+        new TableDesc("Scene", "c_table_Scene"),
     };
 
     /// <summary>
@@ -35,17 +33,11 @@ public class TableLoader : Singleton<TableLoader>
         /// 构造
         /// </summary>
         /// <param name="tableName">表名</param>
-        /// <param name="sheetIndex">Excel表页签ID，0开始</param>
-        /// <param name="proto_message_name">proto消息名</param>
-        /// <param name="outFileName">输出二进制文件名</param>
-        /// <param name="excelName">Excel表名</param>
-        public TableDesc(string tableName, int sheetIndex, string proto_message_name, string outFileName, string excelName)
+        /// <param name="fileName">文件名</param>
+        public TableDesc(string tableName, string fileName)
         {
             this.tableName = tableName;
-            this.excelName = excelName;
-            this.sheetIndex = sheetIndex;
-            this.proto_message_name = proto_message_name;
-            this.outFileName = outFileName;
+            this.fileName = fileName;
         }
 
         /// <summary>
@@ -54,30 +46,14 @@ public class TableLoader : Singleton<TableLoader>
         public string tableName;
 
         /// <summary>
-        /// Excel表名
+        /// 文件名
         /// </summary>
-        public string excelName;
-
-        /// <summary>
-        /// Excel表页签ID，0开始
-        /// </summary>
-        public int sheetIndex;
-
-        /// <summary>
-        /// proto消息名
-        /// </summary>
-        public string proto_message_name;
-
-        /// <summary>
-        /// 输出二进制文件名
-        /// </summary>
-        public string outFileName;
+        public string fileName;
     }
 
     public TableLoader() { }
 
     public delegate void OnLoaded(TextAsset res);
-    public OnLoaded loaded;
 
     /// <summary>
     /// 加载所有表格
@@ -86,17 +62,10 @@ public class TableLoader : Singleton<TableLoader>
     {
         foreach (TableDesc desc in tableDescList)
         {
-            string name = desc.tableName.ToLower();
-            if (!string.IsNullOrEmpty(desc.outFileName))
-            {
-                name = desc.outFileName;
-            }
-
             //加载//TODO:暂时改成了本地加载
-            TextAsset tex = Resources.Load<TextAsset>("Table/" + name);
+            TextAsset tex = Resources.Load<TextAsset>("Table/" + desc.fileName);
 
             string tableMgrName = desc.tableName + "TableManager";
-
             Type type = Type.GetType(tableMgrName);
             if (type == null)
             {
@@ -136,8 +105,7 @@ public class TableLoader : Singleton<TableLoader>
 
             //TODO:加载完成回调
             Delegate dele = Delegate.CreateDelegate(typeof(OnLoaded), tblMgrInst, "OnResourceLoaded");
-            loaded = (OnLoaded)dele;
-            loaded(tex);
+            ((OnLoaded)dele)(tex);
             //res.onLoaded += (Resource.OnLoaded)dele;
         }
     }
@@ -273,31 +241,10 @@ public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEn
     }
 }
 
-/// <summary>
-/// 场景表
-/// </summary>
 [System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
-public class SceneTableManager : TableManager<Table.scene_ARRAY, Table.scene, int, SceneTableManager>
+public class SceneTableManager : TableManager<Table.Scene_ARRAY, Table.Scene, int, SceneTableManager>
 {
-    public override int GetKey(Table.scene table)
-    {
-        return table.id;
-    }
-}
-
-[System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
-public class TestTableManager : TableManager<Table.test_ARRAY, Table.test, int, TestTableManager>
-{
-    public override int GetKey(Table.test table)
-    {
-        return table.id;
-    }
-}
-
-[System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
-public class TestaTableManager : TableManager<Table.testa_ARRAY, Table.testa, int, TestaTableManager>
-{
-    public override int GetKey(Table.testa table)
+    public override int GetKey(Table.Scene table)
     {
         return table.id;
     }

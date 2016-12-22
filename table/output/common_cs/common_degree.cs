@@ -12,35 +12,6 @@
 // Generated from: common_degree.proto
 namespace Common
 {
-    [global::ProtoBuf.ProtoContract(Name=@"DegreeQualityType")]
-    public enum DegreeQualityType
-    {
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_INVALID", Value=0)]
-      DEGREE_INVALID = 0,
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_GREEN", Value=1)]
-      DEGREE_GREEN = 1,
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_BLUE", Value=2)]
-      DEGREE_BLUE = 2,
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_PURPLE", Value=3)]
-      DEGREE_PURPLE = 3,
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_GOLDEN", Value=4)]
-      DEGREE_GOLDEN = 4,
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_DARK_GOLDEN", Value=5)]
-      DEGREE_DARK_GOLDEN = 5,
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_RED", Value=6)]
-      DEGREE_RED = 6,
-            
-      [global::ProtoBuf.ProtoEnum(Name=@"DEGREE_DOCTOR", Value=7)]
-      DEGREE_DOCTOR = 7
-    }
-  
     [global::ProtoBuf.ProtoContract(Name=@"DegreeType")]
     public enum DegreeType
     {

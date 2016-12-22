@@ -1,18 +1,5 @@
 package Common;
 
-// 学位证书品质
-enum DegreeQualityType
-{
-    DEGREE_INVALID      = 0;
-    DEGREE_GREEN        = 1; // 幼儿园(绿)
-    DEGREE_BLUE         = 2; // 小学(蓝)
-    DEGREE_PURPLE       = 3; // 初中(紫)
-    DEGREE_GOLDEN       = 4; // 高中(金)
-    DEGREE_DARK_GOLDEN  = 5; // 大学(暗金)
-    DEGREE_RED          = 6; // 研究生(红)
-    DEGREE_DOCTOR       = 7; // 博士
-}
-
 // 学位证书类别
 enum DegreeType
 {

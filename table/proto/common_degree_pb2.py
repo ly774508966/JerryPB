@@ -6,48 +6,6 @@ from google.protobuf import reflection
 from google.protobuf import service
 from google.protobuf import service_reflection
 from google.protobuf import descriptor_pb2
-_DEGREEQUALITYTYPE = descriptor.EnumDescriptor(
-  name='DegreeQualityType',
-  full_name='Common.DegreeQualityType',
-  filename='DegreeQualityType',
-  values=[
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_INVALID', index=0, number=0,
-      options=None,
-      type=None),
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_GREEN', index=1, number=1,
-      options=None,
-      type=None),
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_BLUE', index=2, number=2,
-      options=None,
-      type=None),
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_PURPLE', index=3, number=3,
-      options=None,
-      type=None),
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_GOLDEN', index=4, number=4,
-      options=None,
-      type=None),
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_DARK_GOLDEN', index=5, number=5,
-      options=None,
-      type=None),
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_RED', index=6, number=6,
-      options=None,
-      type=None),
-    descriptor.EnumValueDescriptor(
-      name='DEGREE_DOCTOR', index=7, number=7,
-      options=None,
-      type=None),
-  ],
-  options=None,
-)
-
-
 _DEGREETYPE = descriptor.EnumDescriptor(
   name='DegreeType',
   full_name='Common.DegreeType',
@@ -102,14 +60,6 @@ _DEGREETYPE = descriptor.EnumDescriptor(
 )
 
 
-DEGREE_INVALID = 0
-DEGREE_GREEN = 1
-DEGREE_BLUE = 2
-DEGREE_PURPLE = 3
-DEGREE_GOLDEN = 4
-DEGREE_DARK_GOLDEN = 5
-DEGREE_RED = 6
-DEGREE_DOCTOR = 7
 TYPE_INVALID = 0
 TYPE_CHINESE = 1
 TYPE_MATH = 2

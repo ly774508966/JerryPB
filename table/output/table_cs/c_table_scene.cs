@@ -10,13 +10,14 @@
 // Option: missing-value detection (*Specified/ShouldSerialize*/Reset*) enabled
     
 // Generated from: c_table_scene.proto
-// Note: requires additional types generated from: common_scene.proto
+// Note: requires additional types generated from: common_degree.proto
+// Note: requires additional types generated from: common_effect.proto
 namespace Table
 {
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"scene")]
- public partial class scene : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Scene")]
+ public partial class Scene : global::ProtoBuf.IExtensible
   {
-    public scene() {}
+    public Scene() {}
     
 
     private int? _id;
@@ -40,97 +41,58 @@ namespace Table
     private void Resetid() { idSpecified = false; }
     
 
-    private Common.SceneType? _scene_type;
+    private Common.DegreeType? _degree_type;
     /// <summary>
-    /// 类型
+    /// 学位证书类别
     /// </summary>
-    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"scene_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public Common.SceneType scene_type
+    [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"degree_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public Common.DegreeType degree_type
     {
-      get { return _scene_type?? Common.SceneType.SCENE_TYPE_INVALID; }
-      set { _scene_type = value; }
+      get { return _degree_type?? Common.DegreeType.TYPE_INVALID; }
+      set { _degree_type = value; }
     }
     //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
-    public bool scene_typeSpecified
+    public bool degree_typeSpecified
     {
-      get { return _scene_type != null; }
-      set { if (value == (_scene_type== null)) _scene_type = value ? scene_type : (Common.SceneType?)null; }
+      get { return _degree_type != null; }
+      set { if (value == (_degree_type== null)) _degree_type = value ? degree_type : (Common.DegreeType?)null; }
     }
-    private bool ShouldSerializescene_type() { return scene_typeSpecified; }
-    private void Resetscene_type() { scene_typeSpecified = false; }
+    private bool ShouldSerializedegree_type() { return degree_typeSpecified; }
+    private void Resetdegree_type() { degree_typeSpecified = false; }
     
-
-    private string _des;
-    [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"des", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public string des
+    private readonly global::System.Collections.Generic.List<uint> _ulist = new global::System.Collections.Generic.List<uint>();
+    [global::ProtoBuf.ProtoMember(3, Name=@"ulist", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
+    public global::System.Collections.Generic.List<uint> ulist
     {
-      get { return _des?? ""; }
-      set { _des = value; }
-    }
-    //Here has been deleted XmlIgnore
-    [global::System.ComponentModel.Browsable(false)]
-    public bool desSpecified
-    {
-      get { return _des != null; }
-      set { if (value == (_des== null)) _des = value ? des : (string)null; }
-    }
-    private bool ShouldSerializedes() { return desSpecified; }
-    private void Resetdes() { desSpecified = false; }
-    
-
-    private Common.GameRes _res = null;
-    /// <summary>
-    /// 产出
-    /// </summary>
-    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"res", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    [global::System.ComponentModel.DefaultValue(null)]
-    public Common.GameRes res
-    {
-      get { return _res; }
-      set { _res = value; }
-    }
-    private readonly global::System.Collections.Generic.List<uint> _num_uint32 = new global::System.Collections.Generic.List<uint>();
-    [global::ProtoBuf.ProtoMember(5, Name=@"num_uint32", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
-    public global::System.Collections.Generic.List<uint> num_uint32
-    {
-      get { return _num_uint32; }
+      get { return _ulist; }
     }
   
 
-    private float? _num_float;
+    private Common.Effect _effect = null;
     /// <summary>
-    /// num_float
+    /// 数值效果
     /// </summary>
-    [global::ProtoBuf.ProtoMember(6, IsRequired = false, Name=@"num_float", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
-    public float num_float
+    [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"effect", DataFormat = global::ProtoBuf.DataFormat.Default)]
+    [global::System.ComponentModel.DefaultValue(null)]
+    public Common.Effect effect
     {
-      get { return _num_float?? default(float); }
-      set { _num_float = value; }
+      get { return _effect; }
+      set { _effect = value; }
     }
-    //Here has been deleted XmlIgnore
-    [global::System.ComponentModel.Browsable(false)]
-    public bool num_floatSpecified
-    {
-      get { return _num_float != null; }
-      set { if (value == (_num_float== null)) _num_float = value ? num_float : (float?)null; }
-    }
-    private bool ShouldSerializenum_float() { return num_floatSpecified; }
-    private void Resetnum_float() { num_floatSpecified = false; }
-    
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
  }
   
-  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"scene_ARRAY")]
-  public partial class scene_ARRAY : global::ProtoBuf.IExtensible
+  [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"Scene_ARRAY")]
+  public partial class Scene_ARRAY : global::ProtoBuf.IExtensible
   {
-    public scene_ARRAY() {}
+    public Scene_ARRAY() {}
     
-    private readonly global::System.Collections.Generic.List<Table.scene> _rows = new global::System.Collections.Generic.List<Table.scene>();
+    private readonly global::System.Collections.Generic.List<Table.Scene> _rows = new global::System.Collections.Generic.List<Table.Scene>();
     [global::ProtoBuf.ProtoMember(1, Name=@"rows", DataFormat = global::ProtoBuf.DataFormat.Default)]
-    public global::System.Collections.Generic.List<Table.scene> rows
+    public global::System.Collections.Generic.List<Table.Scene> rows
     {
       get { return _rows; }
     }

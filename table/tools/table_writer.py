@@ -34,7 +34,7 @@ class Config(object):
         self.output_dir             = '../output/table_data'
         self.default_proto_prefix   = 'c_table_'
         self.default_output_prefix  = ''
-        self.default_output_suffix  = 'tbl'
+        self.default_output_suffix  = 'bytes'
 
         if os.environ.get('WORKBOOK_DIR') != None:
             self.workbook_dir = os.environ.get('WORKBOOK_DIR')

@@ -10,50 +10,36 @@ from google.protobuf import descriptor_pb2
 
 
 _SCENE = descriptor.Descriptor(
-  name='scene',
-  full_name='Table.scene',
+  name='Scene',
+  full_name='Table.Scene',
   filename='c_table_scene.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='id', full_name='Table.scene.id', index=0,
+      name='id', full_name='Table.Scene.id', index=0,
       number=1, type=17, cpp_type=1, label=1,
       default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='scene_type', full_name='Table.scene.scene_type', index=1,
+      name='degree_type', full_name='Table.Scene.degree_type', index=1,
       number=2, type=14, cpp_type=8, label=1,
       default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='des', full_name='Table.scene.des', index=2,
-      number=3, type=9, cpp_type=9, label=1,
-      default_value=unicode("", "utf-8"),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='res', full_name='Table.scene.res', index=3,
-      number=4, type=11, cpp_type=10, label=1,
-      default_value=None,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='num_uint32', full_name='Table.scene.num_uint32', index=4,
-      number=5, type=13, cpp_type=3, label=3,
+      name='ulist', full_name='Table.Scene.ulist', index=2,
+      number=3, type=13, cpp_type=3, label=3,
       default_value=[],
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='num_float', full_name='Table.scene.num_float', index=5,
-      number=6, type=2, cpp_type=6, label=1,
-      default_value=0,
+      name='effect', full_name='Table.Scene.effect', index=3,
+      number=4, type=11, cpp_type=10, label=1,
+      default_value=None,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -67,13 +53,13 @@ _SCENE = descriptor.Descriptor(
 
 
 _SCENE_ARRAY = descriptor.Descriptor(
-  name='scene_ARRAY',
-  full_name='Table.scene_ARRAY',
+  name='Scene_ARRAY',
+  full_name='Table.Scene_ARRAY',
   filename='c_table_scene.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='rows', full_name='Table.scene_ARRAY.rows', index=0,
+      name='rows', full_name='Table.Scene_ARRAY.rows', index=0,
       number=1, type=11, cpp_type=10, label=3,
       default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -87,17 +73,18 @@ _SCENE_ARRAY = descriptor.Descriptor(
   ],
   options=None)
 
-import common_scene_pb2
+import common_degree_pb2
+import common_effect_pb2
 
-_SCENE.fields_by_name['scene_type'].enum_type = common_scene_pb2._SCENETYPE
-_SCENE.fields_by_name['res'].message_type = common_scene_pb2._GAMERES
+_SCENE.fields_by_name['degree_type'].enum_type = common_degree_pb2._DEGREETYPE
+_SCENE.fields_by_name['effect'].message_type = common_effect_pb2._EFFECT
 _SCENE_ARRAY.fields_by_name['rows'].message_type = _SCENE
 
-class scene(message.Message):
+class Scene(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _SCENE
 
-class scene_ARRAY(message.Message):
+class Scene_ARRAY(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _SCENE_ARRAY
 
