@@ -14,19 +14,22 @@
 namespace Table
 {
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"scene")]
-  public partial class scene : global::ProtoBuf.IExtensible
+ public partial class scene : global::ProtoBuf.IExtensible
   {
     public scene() {}
     
 
     private int? _id;
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
       get { return _id?? default(int); }
       set { _id = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool idSpecified
     {
@@ -38,13 +41,16 @@ namespace Table
     
 
     private Common.SceneType? _scene_type;
+    /// <summary>
+    /// 类型
+    /// </summary>
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"scene_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public Common.SceneType scene_type
     {
       get { return _scene_type?? Common.SceneType.SCENE_TYPE_INVALID; }
       set { _scene_type = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool scene_typeSpecified
     {
@@ -62,7 +68,7 @@ namespace Table
       get { return _des?? ""; }
       set { _des = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool desSpecified
     {
@@ -74,6 +80,9 @@ namespace Table
     
 
     private Common.GameRes _res = null;
+    /// <summary>
+    /// 产出
+    /// </summary>
     [global::ProtoBuf.ProtoMember(4, IsRequired = false, Name=@"res", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
     public Common.GameRes res
@@ -90,13 +99,16 @@ namespace Table
   
 
     private float? _num_float;
+    /// <summary>
+    /// num_float
+    /// </summary>
     [global::ProtoBuf.ProtoMember(6, IsRequired = false, Name=@"num_float", DataFormat = global::ProtoBuf.DataFormat.FixedSize)]
     public float num_float
     {
       get { return _num_float?? default(float); }
       set { _num_float = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool num_floatSpecified
     {
@@ -109,7 +121,7 @@ namespace Table
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-  }
+ }
   
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"scene_ARRAY")]
   public partial class scene_ARRAY : global::ProtoBuf.IExtensible

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # encoding=utf-8
 
-import sys, os, Queue, threading, time
+import sys, os, Queue, threading, time, shutil
 import xlrd
 from logger import Logger
 from myTable import MyTable, MyTableTool
@@ -228,6 +228,29 @@ def CommonProto2CS():
 
     os.chdir(work_path)
 
+def CleanDir(dir_path):
+    if os.path.exists(dir_path):
+        list = os.listdir(dir_path)
+        for filename in list:
+            os.remove(dir_path + '/' + filename)
+    else:
+        os.mkdir(dir_path)
+
+def CopyDir(s, t, pattern):
+    if os.path.exists(s) == False:
+        return
+    
+    CleanDir(t)
+    list = os.listdir(s)
+    for filename in list:
+        if filename.find(pattern) != -1:
+            shutil.copy('{}/{}'.format(s, filename), '{}/{}'.format(t, filename))
+
+def CopyClientFile():
+    CopyDir(config.common_cs_path, config.unity_common_cs_path, '.cs')
+    CopyDir(config.table_cs_path, config.unity_table_cs_path, config.client_table_prefix)
+    CopyDir(config.table_data_path, config.unity_table_data_path, config.client_table_prefix)
+
 if __name__ == '__main__':
     start_time = time.time()
     
@@ -261,5 +284,8 @@ if __name__ == '__main__':
     
         #RunSync(use_type)
         RunAsync(use_type)
+
+        if use_type == MyTableTool.USE_TYPE_ALL or use_type == MyTableTool.USE_TYPE_CLIENT:
+            CopyClientFile()
 
     logger.error('finish useTime:' + str(time.time() - start_time))

@@ -15,19 +15,22 @@
 namespace Table
 {
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"test")]
-  public partial class test : global::ProtoBuf.IExtensible
+ public partial class test : global::ProtoBuf.IExtensible
   {
     public test() {}
     
 
     private int? _id;
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
       get { return _id?? default(int); }
       set { _id = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool idSpecified
     {
@@ -39,13 +42,16 @@ namespace Table
     
 
     private Common.DegreeType? _degree_type;
+    /// <summary>
+    /// 学位证书类别
+    /// </summary>
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"degree_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public Common.DegreeType degree_type
     {
       get { return _degree_type?? Common.DegreeType.TYPE_INVALID; }
       set { _degree_type = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool degree_typeSpecified
     {
@@ -58,7 +64,7 @@ namespace Table
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-  }
+ }
   
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"test_ARRAY")]
   public partial class test_ARRAY : global::ProtoBuf.IExtensible
@@ -78,19 +84,22 @@ namespace Table
   }
   
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"testa")]
-  public partial class testa : global::ProtoBuf.IExtensible
+ public partial class testa : global::ProtoBuf.IExtensible
   {
     public testa() {}
     
 
     private int? _id;
+    /// <summary>
+    /// ID
+    /// </summary>
     [global::ProtoBuf.ProtoMember(1, IsRequired = false, Name=@"id", DataFormat = global::ProtoBuf.DataFormat.ZigZag)]
     public int id
     {
       get { return _id?? default(int); }
       set { _id = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool idSpecified
     {
@@ -102,6 +111,9 @@ namespace Table
     
 
     private Common.Effect _name = null;
+    /// <summary>
+    /// 姓名
+    /// </summary>
     [global::ProtoBuf.ProtoMember(2, IsRequired = false, Name=@"name", DataFormat = global::ProtoBuf.DataFormat.Default)]
     [global::System.ComponentModel.DefaultValue(null)]
     public Common.Effect name
@@ -111,13 +123,16 @@ namespace Table
     }
 
     private Common.DegreeQualityType? _degree_quality_type;
+    /// <summary>
+    /// 学位证书品质
+    /// </summary>
     [global::ProtoBuf.ProtoMember(3, IsRequired = false, Name=@"degree_quality_type", DataFormat = global::ProtoBuf.DataFormat.TwosComplement)]
     public Common.DegreeQualityType degree_quality_type
     {
       get { return _degree_quality_type?? Common.DegreeQualityType.DEGREE_INVALID; }
       set { _degree_quality_type = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool degree_quality_typeSpecified
     {
@@ -130,7 +145,7 @@ namespace Table
     private global::ProtoBuf.IExtension extensionObject;
     global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
       { return global::ProtoBuf.Extensible.GetExtensionObject(ref extensionObject, createIfMissing); }
-  }
+ }
   
   [global::System.Serializable, global::ProtoBuf.ProtoContract(Name=@"testa_ARRAY")]
   public partial class testa_ARRAY : global::ProtoBuf.IExtensible

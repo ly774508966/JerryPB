@@ -25,7 +25,7 @@ namespace Common
       get { return _type?? Common.GameResType.GAME_RES_TYPE_INVALID; }
       set { _type = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool typeSpecified
     {
@@ -43,7 +43,7 @@ namespace Common
       get { return _des?? ""; }
       set { _des = value; }
     }
-    //Here has been replaced by XXMMLLDeleter
+    //Here has been deleted XmlIgnore
     [global::System.ComponentModel.Browsable(false)]
     public bool desSpecified
     {
