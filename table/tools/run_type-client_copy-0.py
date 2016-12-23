@@ -80,10 +80,17 @@ def DeleteFile(path, pattern1, pattern2 = ''):
 def CleanProto(use_typ):
     if use_type == MyTableTool.USE_TYPE_ALL:
         DeleteFile(config.proto_path, '_table_', '.proto')
+        # 下面两个文件不删除的话，表格文件命名大小写修改后，不会新创建解析文件
+        DeleteFile(config.proto_path, '_table_', '.py')
+        DeleteFile(config.proto_path, '_table_', '.pyc')
     elif use_type == MyTableTool.USE_TYPE_CLIENT:
         DeleteFile(config.proto_path, config.client_table_prefix, '.proto')
+        DeleteFile(config.proto_path, config.client_table_prefix, '.py')
+        DeleteFile(config.proto_path, config.client_table_prefix, '.pyc')
     elif use_type == MyTableTool.USE_TYPE_SERVER:
         DeleteFile(config.proto_path, config.server_table_prefix, '.proto')
+        DeleteFile(config.proto_path, config.server_table_prefix, '.py')
+        DeleteFile(config.proto_path, config.server_table_prefix, '.pyc')
 
 def CleanOutput(use_type):
     if use_type == MyTableTool.USE_TYPE_ALL:
