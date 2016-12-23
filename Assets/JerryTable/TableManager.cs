@@ -9,108 +9,55 @@ namespace Jerry
 {
     public class TableLoader : TableSingleton<TableLoader>
     {
-        /// <summary>
-        /// 表格描述列表
-        /// </summary>
-        public List<TableDesc> tableDescList = new List<TableDesc>
-        {
-            new TableDesc("TestA", "c_table_TestA"),
-            new TableDesc("TestB", "c_table_TestB"),
-        };
-
-        /// <summary>
-        /// 表格描述
-        /// </summary>
-        public class TableDesc
-        {
-            /// <summary>
-            /// 构造
-            /// </summary>
-            /// <param name="tableName">表名</param>
-            public TableDesc(string tableName)
-            {
-                this.tableName = tableName;
-            }
-
-            /// <summary>
-            /// 构造
-            /// </summary>
-            /// <param name="tableName">表名</param>
-            /// <param name="fileName">文件名</param>
-            public TableDesc(string tableName, string fileName)
-            {
-                this.tableName = tableName;
-                this.fileName = fileName;
-            }
-
-            /// <summary>
-            /// 表名
-            /// </summary>
-            public string tableName;
-
-            /// <summary>
-            /// 文件名
-            /// </summary>
-            public string fileName;
-        }
-
-        public TableLoader() { }
-
         public delegate void OnLoaded(TextAsset res);
 
-        /// <summary>
-        /// 加载所有表格
-        /// </summary>
-        public void LoadTables()
+        public OnLoaded LoadTable(string tableName)
         {
-            foreach (TableDesc desc in tableDescList)
+            if (string.IsNullOrEmpty(tableName))
             {
-                //加载//TODO:暂时改成了本地加载
-                TextAsset tex = Resources.Load<TextAsset>("Table/" + desc.fileName);
-
-                string tableMgrName = desc.tableName + "TableManager";
-                Type type = Type.GetType(tableMgrName);
-                if (type == null)
-                {
-                    Debug.LogError(string.Format("{0} is Not Defined!", tableMgrName));
-                    continue;
-                }
-
-                PropertyInfo pinfo = null;
-                while (type != null)
-                {
-                    pinfo = type.GetProperty("Instance");
-
-                    if (pinfo != null)
-                    {
-                        break;
-                    }
-
-                    type = type.BaseType;
-                }
-
-                if (pinfo == null)
-                {
-                    continue;
-                }
-
-                MethodInfo instMethod = pinfo.GetGetMethod();
-                if (instMethod == null)
-                {
-                    continue;
-                }
-
-                System.Object tblMgrInst = instMethod.Invoke(null, null);
-                if (tblMgrInst == null)
-                {
-                    continue;
-                }
-
-                //TODO:加载完成回调
-                Delegate dele = Delegate.CreateDelegate(typeof(OnLoaded), tblMgrInst, "OnResourceLoaded");
-                ((OnLoaded)dele)(tex);
-                //res.onLoaded += (Resource.OnLoaded)dele;
+                return null;
             }
+
+            string tableMgrName = tableName + "TableManager";
+            Type type = Type.GetType(tableMgrName);
+            if (type == null)
+            {
+                Debug.LogError(string.Format("{0} is Not Defined!", tableMgrName));
+                return null;
+            }
+
+            PropertyInfo pinfo = null;
+            while (type != null)
+            {
+                pinfo = type.GetProperty("Instance");
+
+                if (pinfo != null)
+                {
+                    break;
+                }
+
+                type = type.BaseType;
+            }
+
+            if (pinfo == null)
+            {
+                return null;
+            }
+
+            MethodInfo instMethod = pinfo.GetGetMethod();
+            if (instMethod == null)
+            {
+                return null;
+            }
+
+            System.Object tblMgrInst = instMethod.Invoke(null, null);
+            if (tblMgrInst == null)
+            {
+                return null;
+            }
+
+            Delegate dele = Delegate.CreateDelegate(typeof(OnLoaded), tblMgrInst, "OnResourceLoaded");
+            return (OnLoaded)dele;
         }
     }
 
