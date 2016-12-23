@@ -43,9 +43,9 @@ public class TablePacker : Editor
     [MenuItem("Assets/CopyTables")]
     public static void CopyTables()
     {
-        CopyDirectory(_outputCommonCSPath, _unityCommonCSPath, new List<string> { "common_", ".cs" });
-        CopyDirectory(_outputTableCSPath, _unityTableCSPath, new List<string> { "c_table_", ".cs" });
-        CopyDirectory(_outputTableDataPath, _unityTableDataPath, new List<string> { "c_table_", ".bytes" });
+        CopyDirectory(_outputCommonCSPath, _unityCommonCSPath, false, new List<string> { "common_", ".cs" });
+        CopyDirectory(_outputTableCSPath, _unityTableCSPath, false, new List<string> { "c_table_", ".cs" });
+        CopyDirectory(_outputTableDataPath, _unityTableDataPath, false, new List<string> { "c_table_", ".bytes" });
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         UnityEngine.Debug.Log("CopyTables Finish");
@@ -149,7 +149,7 @@ public class TablePacker : Editor
         return true;
     }
 
-    private static void CopyDirectory(string pathFrom, string pathTo, List<string> fileNameFilter = null, List<string> fileNameNotFilter = null)
+    private static void CopyDirectory(string pathFrom, string pathTo, bool clean = false, List<string> fileNameFilter = null, List<string> fileNameNotFilter = null)
     {
         if (string.IsNullOrEmpty(pathFrom) ||
             string.IsNullOrEmpty(pathTo))
@@ -162,11 +162,21 @@ public class TablePacker : Editor
             return;
         }
 
-        if (Directory.Exists(pathTo))
+        if (clean)
         {
-            Directory.Delete(pathTo, true);
+            if (Directory.Exists(pathTo))
+            {
+                Directory.Delete(pathTo, true);
+            }
+            Directory.CreateDirectory(pathTo);
         }
-        Directory.CreateDirectory(pathTo);
+        else
+        {
+            if (!Directory.Exists(pathTo))
+            {
+                Directory.CreateDirectory(pathTo);
+            }
+        }
 
         string[] files = Directory.GetFiles(pathFrom);
         string fileName;
@@ -177,7 +187,7 @@ public class TablePacker : Editor
             {
                 continue;
             }
-            File.Copy(pathFrom + "/" + fileName, pathTo + "/" + fileName);
+            File.Copy(pathFrom + "/" + fileName, pathTo + "/" + fileName, true);
         }
 
         string[] directs = Directory.GetDirectories(pathFrom);
@@ -185,7 +195,7 @@ public class TablePacker : Editor
         foreach (string direct in directs)
         {
             directName = Path.GetFileName(direct);
-            CopyDirectory(direct, pathTo + "/" + directName, fileNameFilter, fileNameNotFilter);
+            CopyDirectory(direct, pathTo + "/" + directName, clean, fileNameFilter, fileNameNotFilter);
         }
     }
 }

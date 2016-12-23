@@ -239,23 +239,27 @@ def CommonProto2CS():
 
     os.chdir(work_path)
 
-def CleanDir(dir_path):
-    if os.path.exists(dir_path):
-        list = os.listdir(dir_path)
-        for filename in list:
+def CleanDir(dir_path, pattern = ''):
+    if os.path.exists(dir_path) == False:
+        return
+    
+    list = os.listdir(dir_path)
+    for filename in list:
+        if pattern == '' or filename.find(pattern) != -1:
             os.remove(dir_path + '/' + filename)
-    else:
-        os.mkdir(dir_path)
 
-def CopyDir(s, t, pattern):
+def CopyDir(s, t, pattern = ''):
     if os.path.exists(s) == False:
         return
     
-    CleanDir(t)
+    if os.path.exists(t) == False:
+        os.mkdir(dir_path)
+
     list = os.listdir(s)
     for filename in list:
-        if filename.find(pattern) != -1:
-            shutil.copy('{}/{}'.format(s, filename), '{}/{}'.format(t, filename))
+        if pattern != '' and filename.find(pattern) == -1:
+            continue
+        shutil.copy('{}/{}'.format(s, filename), '{}/{}'.format(t, filename))
 
 def CopyClientFile():
     CopyDir(config.common_cs_path, config.unity_common_cs_path, '.cs')
