@@ -1,6 +1,7 @@
 ﻿using UnityEditor;
 using System.IO;
 using System.Diagnostics;
+using UnityEngine;
 
 /// <summary>
 /// 打表工具
@@ -9,10 +10,13 @@ public class TablePacker : Editor
 {
     #region 配置信息
 
-    /// <summary>
-    /// table所在文件夹名称
-    /// </summary>
-    private static string m_strTableFileName = "table";
+    private static string _toolsPath = "/table/tools/";
+
+    private static string _outputCommonCSPath = Application.dataPath + "/../table/output/common_cs/";
+
+    private static string _outputTableCSPath = Application.dataPath + "/../table/output/table_cs/";
+
+    private static string _outputTableDataPath = Application.dataPath + "/../table/output/table_data/";
 
     #endregion 配置信息
 
@@ -20,6 +24,24 @@ public class TablePacker : Editor
     /// 工程所在目录，是Assets的父目录
     /// </summary>
     private static string dir;
+
+    [MenuItem("Assets/CopyTables")]
+    public static void CopyTables()
+    {
+        dir = Directory.GetCurrentDirectory();
+        string toolsPath = dir + _toolsPath;
+        try
+        {
+            Directory.SetCurrentDirectory(toolsPath);
+            CallProcess("python.exe", toolsPath + "run_type-client.py");
+            Directory.SetCurrentDirectory(dir);
+        }
+        catch (System.Exception ex)
+        {
+            UnityEngine.Debug.LogError(ex);
+            Directory.SetCurrentDirectory(dir);
+        }
+    }
 
     /// <summary>
     /// 执行外部程序
@@ -60,11 +82,47 @@ public class TablePacker : Editor
         return true;
     }
 
-    [MenuItem("Assets/NewPack")]
-    public static void NewPack()
+    private static void CopyDirectory(string pathFrom, string pathTo)
+    {
+        if (string.IsNullOrEmpty(pathFrom) ||
+            string.IsNullOrEmpty(pathTo))
+        {
+            return;
+        }
+
+        if (Directory.Exists(pathFrom) == false)
+        {
+            return;
+        }
+
+        if (Directory.Exists(pathTo))
+        {
+            Directory.Delete(pathTo, true);
+        }
+        Directory.CreateDirectory(pathTo);
+
+        string[] files = Directory.GetFiles(pathFrom);
+        string fileName;
+        foreach (string file in files)
+        {
+            fileName = Path.GetFileName(file);
+            File.Copy(pathFrom + "/" + fileName, pathTo + "/" + fileName);
+        }
+
+        string[] directs = Directory.GetDirectories(pathFrom);
+        string directName;
+        foreach (string direct in directs)
+        {
+            directName = Path.GetFileName(direct);
+            CopyDirectory(direct, pathTo + "/" + directName);
+        }
+    }
+
+    [MenuItem("Assets/PackTables")]
+    public static void PackTables()
     {
         dir = Directory.GetCurrentDirectory();
-        string toolsPath = dir + string.Format(@"\{0}\tools\", m_strTableFileName);
+        string toolsPath = dir + _toolsPath;
         try
         {
             Directory.SetCurrentDirectory(toolsPath);
