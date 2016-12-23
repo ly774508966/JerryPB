@@ -97,13 +97,13 @@ def CleanProto(use_typ):
 def CleanOutput(use_type):
     if use_type == MyTableTool.USE_TYPE_ALL:
         DeleteFile(config.table_cs_path, '.cs')
-        DeleteFile(config.table_data_path, '.tbl')
+        DeleteFile(config.table_data_path, '.bytes')
     elif use_type == MyTableTool.USE_TYPE_CLIENT:
         DeleteFile(config.table_cs_path, '.cs', config.client_table_prefix)
-        DeleteFile(config.table_data_path, '.tbl', config.client_table_prefix)
+        DeleteFile(config.table_data_path, '.bytes', config.client_table_prefix)
     elif use_type == MyTableTool.USE_TYPE_SERVER:
         DeleteFile(config.table_cs_path, '.cs', config.server_table_prefix)
-        DeleteFile(config.table_data_path, '.tbl', config.server_table_prefix)
+        DeleteFile(config.table_data_path, '.bytes', config.server_table_prefix)
     
 def FindTables(use_type, run_id):
     list = os.listdir(config.table_path)
