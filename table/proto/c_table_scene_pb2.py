@@ -12,7 +12,7 @@ from google.protobuf import descriptor_pb2
 _SCENE = descriptor.Descriptor(
   name='Scene',
   full_name='Table.Scene',
-  filename='c_table_scene.proto',
+  filename='c_table_Scene.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
@@ -55,7 +55,7 @@ _SCENE = descriptor.Descriptor(
 _SCENE_ARRAY = descriptor.Descriptor(
   name='Scene_ARRAY',
   full_name='Table.Scene_ARRAY',
-  filename='c_table_scene.proto',
+  filename='c_table_Scene.proto',
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(

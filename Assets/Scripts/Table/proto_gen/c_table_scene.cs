@@ -9,7 +9,7 @@
 
 // Option: missing-value detection (*Specified/ShouldSerialize*/Reset*) enabled
     
-// Generated from: c_table_scene.proto
+// Generated from: c_table_Scene.proto
 // Note: requires additional types generated from: common_degree.proto
 // Note: requires additional types generated from: common_effect.proto
 namespace Table

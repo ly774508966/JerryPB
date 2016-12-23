@@ -259,6 +259,9 @@ def CopyDir(s, t, pattern = ''):
     for filename in list:
         if pattern != '' and filename.find(pattern) == -1:
             continue
+        # Unity中，不做删除的话，同名文件，只是大小写不一样，文件名不会替换
+        if os.path.exists('{}/{}'.format(t, filename)):
+            os.remove('{}/{}'.format(t, filename))
         shutil.copy('{}/{}'.format(s, filename), '{}/{}'.format(t, filename))
 
 def CopyClientFile():

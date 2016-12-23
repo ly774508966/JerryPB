@@ -187,6 +187,11 @@ public class TablePacker : Editor
             {
                 continue;
             }
+            //不做删除的话，同名文件，只是大小写不一样，文件名不会替换
+            if (File.Exists(pathTo + "/" + fileName))
+            {
+                File.Delete(pathTo + "/" + fileName);
+            }
             File.Copy(pathFrom + "/" + fileName, pathTo + "/" + fileName, true);
         }
 
