@@ -7,7 +7,7 @@
 
 ## 使用
 
-打表工具如下：
+工具目录如下：
 - table
     - output 输出文件
         - table_cs 表格解析类，和表格对应
@@ -22,31 +22,31 @@
     - table 表格文件
     - tools 工具
 
-操作步骤：
-1. 新建一个Excel表，放到table文件夹，建议用英文命名
-    1. Excel文件代表的是表集合，同系统的表可以放一个Excel文件，里边的一个Sheet才是一个具体的表
-    1. 新建一个Sheet，命名为`xx_name`，`xx`的值可以是（命名不合规则的默认是`none_name`）：
-        1. `all` 服务器和客户端都用
-        1. `client` 仅客户端用
-        1. `server` 仅服务器用
-        1. `none` 不会打成表，用来做说明备注的
-    1. 填充一个Sheet，格式如`补充:表格格式` 
-1. 关闭所有要打的表所在的Excel文件
-1. 配置`tools\config.py`中的
-    1. `self.unity_table_cs_path`
-    1. `self.unity_table_data_path`
-    1. `self.unity_common_cs_path`
-1. 运行`tools\run_type-client_copy-1.py`，log在`table_tools.log`
-    1. 参数说明
-        1. type 打表类型，这里打客户端表
-        1. copy 是否拷贝到Unity工程，这是设置：`是`
-    1. 相应的数据就在Unity工程了
-    1. 或者运行Unity里的`Assets/JerryTable`下的指令
-1. 使用
-    1. `TableDesc.cs`注册一个新表
-    1. `GameApp.cs`里
-        1. `LoadTables();` 加载表，你可以自定义选择用从Resources或AssetBundle加载
-        1. 查找表，主键可以自己定义，单键或者组合键
+使用步骤：
+- 新建一个Excel表，放到table文件夹，建议用英文命名
+    - Excel文件代表的是表集合，同系统的表可以放一个Excel文件，里边的一个Sheet才是一个具体的表
+    - 新建一个Sheet，命名为`xx_name`，`xx`的值可以是（命名不合规则的默认是`none_name`）：
+        - `all` 服务器和客户端都用
+        - `client` 仅客户端用
+        - `server` 仅服务器用
+        - `none` 不会打成表，用来做说明备注的
+    - 填充一个Sheet，格式如`补充:表格格式` 
+- 关闭所有要打的表所在的Excel文件
+- 配置`tools\config.py`中的
+    - `self.unity_table_cs_path`
+    - `self.unity_table_data_path`
+    - `self.unity_common_cs_path`
+- 运行`tools\run_type-client_copy--py`，log在`table_tools.log`
+    - 参数说明
+        - type 打表类型，这里打客户端表
+        - copy 是否拷贝到Unity工程，这是设置：`是`
+    - 相应的数据就在Unity工程了
+    - 或者运行Unity里的`Assets/JerryTable`下的指令
+- 使用
+    - `TableDesc.cs`注册一个新表
+    - `GameApp.cs`里
+        - `LoadTables();` 加载表，你可以自定义选择用从Resources或AssetBundle加载
+        - 查找表，主键可以自己定义，单键或者组合键
 
 ---
 
