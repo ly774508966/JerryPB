@@ -231,7 +231,10 @@ def RunAsync(use_type):
 def CommonProto2CS():
     work_path = os.getcwd()
     os.chdir(config.proto_path)
-    
+
+    DeleteFile(config.proto_path, config.common_prefix, '.py')
+    DeleteFile(config.proto_path, config.common_prefix, '.pyc')
+        
     DeleteFile(config.common_cs_path, '.cs')
     Config.generate_proto_py_file('common_*')
     

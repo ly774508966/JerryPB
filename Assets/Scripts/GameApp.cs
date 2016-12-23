@@ -11,11 +11,11 @@ public class GameApp : MonoBehaviour
 
     void Start()
     {
-        Table.Scene scene = null;
-        
-        if (SceneTableManager.Instance.TryGetValue(10000, out scene))
+        Table.TestA testA = null;
+
+        if (TestATableManager.Instance.TryGetValue(10000, out testA))
         {
-            JerryDebug.LogInfo(scene, true);
+            JerryDebug.LogInfo(testA, true);
         }
         else
         {

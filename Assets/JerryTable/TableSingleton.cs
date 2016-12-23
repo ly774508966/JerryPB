@@ -1,13 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
-using System;
+﻿using System;
 
 /// <summary>
 /// 单例类
 /// </summary>
 /// <typeparam name="T"></typeparam>
 [System.Reflection.Obfuscation(ApplyToMembers = true, Exclude = true, Feature = "renaming")]
-public class Singleton<T>
+public class TableSingleton<T>
 {
     /// <summary>
     /// 单例

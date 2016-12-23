@@ -10,6 +10,7 @@ class Config(object):
         self.proto_path = '../proto'
         self.client_table_prefix = 'c_table_'
         self.server_table_prefix = 's_table_'
+        self.common_prefix = 'common_'
         self.client_table_package = 'Table'
         self.server_table_package = 'table'
         self.common_cs_path = '../output/common_cs' # 公共CS文件存储路径

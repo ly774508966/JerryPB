@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-public class TableLoader : Singleton<TableLoader>
+public class TableLoader : TableSingleton<TableLoader>
 {
     /// <summary>
     /// 表格描述列表
     /// </summary>
     public List<TableDesc> tableDescList = new List<TableDesc>
     {
-        new TableDesc("Scene", "c_table_Scene"),
+        new TableDesc("TestA", "c_table_TestA"),
+        new TableDesc("TestB", "c_table_TestB"),
     };
 
     /// <summary>
@@ -118,7 +119,7 @@ public class TableLoader : Singleton<TableLoader>
 /// <typeparam name="T">表</typeparam>
 /// <typeparam name="K">键值</typeparam>
 /// <typeparam name="T_1">具体表管理器类名</typeparam>
-public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEnumerable
+public abstract class TableManager<TableArrayT, T, K, T_1> : TableSingleton<T_1>, IEnumerable
 {
     /// <summary>
     /// 表组
@@ -238,14 +239,5 @@ public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEn
                 Debug.LogError(string.Format("{0} does not has rows{1} exist!", array, key));
             }
         }
-    }
-}
-
-[System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
-public class SceneTableManager : TableManager<Table.Scene_ARRAY, Table.Scene, int, SceneTableManager>
-{
-    public override int GetKey(Table.Scene table)
-    {
-        return table.id;
     }
 }
