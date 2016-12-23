@@ -5,7 +5,7 @@ using System.Diagnostics;
 /// <summary>
 /// 打表工具
 /// </summary>
-public class TablePacker : EditorWindow
+public class TablePacker : Editor
 {
     #region 配置信息
 
@@ -20,31 +20,6 @@ public class TablePacker : EditorWindow
     /// 工程所在目录，是Assets的父目录
     /// </summary>
     private static string dir;
-
-    /// <summary>
-    /// table路径
-    /// </summary>
-    private static string tablePath;
-
-    /// <summary>
-    /// table_output路径
-    /// </summary>
-    private static string table_outputPath;
-
-    /// <summary>
-    /// table_tools路径
-    /// </summary>
-    private static string table_toolsPath;
-
-    /// <summary>
-    /// proto路径
-    /// </summary>
-    private static string protoPath;
-
-    /// <summary>
-    /// 打出的表格文件存储路径
-    /// </summary>
-    private static string table_outputStreamingPath;
 
     /// <summary>
     /// 执行外部程序
@@ -85,39 +60,6 @@ public class TablePacker : EditorWindow
         return true;
     }
 
-    /// <summary>
-    /// 生成cs文件
-    /// </summary>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    private static bool ProcessProto(string name, string path)
-    {
-        string param = string.Format("-i:{0}.proto -o:{0}.cs -p:detectMissing", name);
-        UnityEngine.Debug.LogError(param + " " + path);
-        if (CallProcess("protogen.exe", param))
-        {
-            if (!Directory.Exists(dir + path))
-            {
-                Directory.CreateDirectory(dir + path);
-            }
-            File.Copy(@".\" + name + ".cs", dir + path + name + ".cs", true);
-            File.Delete(@".\" + name + ".cs");
-            return true;
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// 生成Python文件
-    /// </summary>
-    /// <param name="name"></param>
-    private static void GeneratePythonFile(string name)
-    {
-        string param = string.Format("-I. --python_out=. {0}.proto", name);
-        CallProcess("protoc.exe", param);
-    }
-
     [MenuItem("Assets/NewPack")]
     public static void NewPack()
     {
@@ -126,7 +68,7 @@ public class TablePacker : EditorWindow
         try
         {
             Directory.SetCurrentDirectory(toolsPath);
-            CallProcess("python.exe", toolsPath + "run.py");
+            CallProcess("python.exe", toolsPath + "run_type-client.py");
             Directory.SetCurrentDirectory(dir);
         }
         catch (System.Exception ex)
