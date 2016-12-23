@@ -24,6 +24,9 @@ class TaskInfo():
 
 def ParseArg(argv):
     use_type = MyTableTool.USE_TYPE_NONE
+    do_copy = False
+    par = ''
+    
     if len(argv) < 1:
         return False, None
     elif len(argv) == 1:
@@ -33,11 +36,13 @@ def ParseArg(argv):
 
         file_names = file_name = file_name.split('_', 1)
         if len(file_names) != 2:
-            return True, [use_type]
+            return True, [use_type, do_copy]
+        par = file_names[1]
+    elif len(argv) == 2:
+        par = argv[1]
 
-        file_name = file_names[1]
-        pars = file_name.split('_')
-        
+    if par != '':
+        pars = par.split('_')
         for p in pars:
             ps = p.split('-')
             if len(ps) == 2:
@@ -48,7 +53,13 @@ def ParseArg(argv):
                         use_type = MyTableTool.USE_TYPE_CLIENT
                     elif ps[1] == 'server':
                         use_type = MyTableTool.USE_TYPE_SERVER
-    return True, [use_type]
+                if ps[0] == 'copy':
+                    if ps[1] == '0':
+                        do_copy = False
+                    elif ps[1] == '1':
+                        do_copy = True
+    
+    return True, [use_type, do_copy]
 
 def Usage():
     print 'this is Usage()'
@@ -265,6 +276,7 @@ if __name__ == '__main__':
     logger.reset()
 
     use_type = args[0]
+    do_copy = args[1]
 
     str_use_type = 'None'
     if use_type == MyTableTool.USE_TYPE_CLIENT:
@@ -285,7 +297,8 @@ if __name__ == '__main__':
         #RunSync(use_type)
         RunAsync(use_type)
 
-        if use_type == MyTableTool.USE_TYPE_ALL or use_type == MyTableTool.USE_TYPE_CLIENT:
-            CopyClientFile()
+        if do_copy == True:
+            if use_type == MyTableTool.USE_TYPE_ALL or use_type == MyTableTool.USE_TYPE_CLIENT:
+                CopyClientFile()
 
     logger.error('finish useTime:' + str(time.time() - start_time))
