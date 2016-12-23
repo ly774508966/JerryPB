@@ -5,238 +5,241 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
-public class TableLoader : TableSingleton<TableLoader>
+namespace Jerry
 {
-    /// <summary>
-    /// 表格描述列表
-    /// </summary>
-    public List<TableDesc> tableDescList = new List<TableDesc>
-    {
-        new TableDesc("TestA", "c_table_TestA"),
-        new TableDesc("TestB", "c_table_TestB"),
-    };
-
-    /// <summary>
-    /// 表格描述
-    /// </summary>
-    public class TableDesc
+    public class TableLoader : TableSingleton<TableLoader>
     {
         /// <summary>
-        /// 构造
+        /// 表格描述列表
         /// </summary>
-        /// <param name="tableName">表名</param>
-        public TableDesc(string tableName)
+        public List<TableDesc> tableDescList = new List<TableDesc>
         {
-            this.tableName = tableName;
-        }
+            new TableDesc("TestA", "c_table_TestA"),
+            new TableDesc("TestB", "c_table_TestB"),
+        };
 
         /// <summary>
-        /// 构造
+        /// 表格描述
         /// </summary>
-        /// <param name="tableName">表名</param>
-        /// <param name="fileName">文件名</param>
-        public TableDesc(string tableName, string fileName)
+        public class TableDesc
         {
-            this.tableName = tableName;
-            this.fileName = fileName;
-        }
-
-        /// <summary>
-        /// 表名
-        /// </summary>
-        public string tableName;
-
-        /// <summary>
-        /// 文件名
-        /// </summary>
-        public string fileName;
-    }
-
-    public TableLoader() { }
-
-    public delegate void OnLoaded(TextAsset res);
-
-    /// <summary>
-    /// 加载所有表格
-    /// </summary>
-    public void LoadTables()
-    {
-        foreach (TableDesc desc in tableDescList)
-        {
-            //加载//TODO:暂时改成了本地加载
-            TextAsset tex = Resources.Load<TextAsset>("Table/" + desc.fileName);
-
-            string tableMgrName = desc.tableName + "TableManager";
-            Type type = Type.GetType(tableMgrName);
-            if (type == null)
+            /// <summary>
+            /// 构造
+            /// </summary>
+            /// <param name="tableName">表名</param>
+            public TableDesc(string tableName)
             {
-                Debug.LogError(string.Format("{0} is Not Defined!", tableMgrName));
-                continue;
+                this.tableName = tableName;
             }
 
-            PropertyInfo pinfo = null;
-            while (type != null)
+            /// <summary>
+            /// 构造
+            /// </summary>
+            /// <param name="tableName">表名</param>
+            /// <param name="fileName">文件名</param>
+            public TableDesc(string tableName, string fileName)
             {
-                pinfo = type.GetProperty("Instance");
+                this.tableName = tableName;
+                this.fileName = fileName;
+            }
 
-                if (pinfo != null)
+            /// <summary>
+            /// 表名
+            /// </summary>
+            public string tableName;
+
+            /// <summary>
+            /// 文件名
+            /// </summary>
+            public string fileName;
+        }
+
+        public TableLoader() { }
+
+        public delegate void OnLoaded(TextAsset res);
+
+        /// <summary>
+        /// 加载所有表格
+        /// </summary>
+        public void LoadTables()
+        {
+            foreach (TableDesc desc in tableDescList)
+            {
+                //加载//TODO:暂时改成了本地加载
+                TextAsset tex = Resources.Load<TextAsset>("Table/" + desc.fileName);
+
+                string tableMgrName = desc.tableName + "TableManager";
+                Type type = Type.GetType(tableMgrName);
+                if (type == null)
                 {
-                    break;
+                    Debug.LogError(string.Format("{0} is Not Defined!", tableMgrName));
+                    continue;
                 }
 
-                type = type.BaseType;
-            }
-
-            if (pinfo == null)
-            {
-                continue;
-            }
-
-            MethodInfo instMethod = pinfo.GetGetMethod();
-            if (instMethod == null)
-            {
-                continue;
-            }
-
-            System.Object tblMgrInst = instMethod.Invoke(null, null);
-            if (tblMgrInst == null)
-            {
-                continue;
-            }
-
-            //TODO:加载完成回调
-            Delegate dele = Delegate.CreateDelegate(typeof(OnLoaded), tblMgrInst, "OnResourceLoaded");
-            ((OnLoaded)dele)(tex);
-            //res.onLoaded += (Resource.OnLoaded)dele;
-        }
-    }
-}
-
-/// <summary>
-/// 表格管理
-/// </summary>
-/// <typeparam name="TableArrayT">表组</typeparam>
-/// <typeparam name="T">表</typeparam>
-/// <typeparam name="K">键值</typeparam>
-/// <typeparam name="T_1">具体表管理器类名</typeparam>
-public abstract class TableManager<TableArrayT, T, K, T_1> : TableSingleton<T_1>, IEnumerable
-{
-    /// <summary>
-    /// 表组
-    /// </summary>
-    public TableArrayT array;
-
-    /// <summary>
-    /// 键
-    /// </summary>
-    public K key;
-
-    /// <summary>
-    /// 数据
-    /// </summary>
-    public readonly Dictionary<K, T> dic = new Dictionary<K, T>();
-
-    /// <summary>
-    /// 获得枚举器
-    /// </summary>
-    /// <returns></returns>
-    public IEnumerator GetEnumerator()
-    {
-        return dic.GetEnumerator();
-    }
-
-    /// <summary>
-    /// 增加表
-    /// </summary>
-    /// <param name="table"></param>
-    public void AddTable(T table)
-    {
-        K key = GetKey(table);
-
-        if (dic.ContainsKey(key))
-        {
-            Debug.LogError(string.Format("{0}'s key {1} exist!", array, key));
-        }
-        else
-        {
-            dic.Add(key, table);
-        }
-
-        PostProcess(table);
-    }
-
-    /// <summary>
-    /// 获取键值
-    /// </summary>
-    /// <param name="table"></param>
-    /// <returns></returns>
-    public abstract K GetKey(T table);
-
-    /// <summary>
-    /// 查表
-    /// </summary>
-    /// <param name="key">键值</param>
-    /// <param name="tbl">返回的表</param>
-    /// <returns></returns>
-    public virtual bool TryGetValue(K key, out T tbl)
-    {
-        if (!dic.TryGetValue(key, out tbl))
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    /// <summary>
-    /// 处理完一行数据
-    /// </summary>
-    /// <param name="table"></param>
-    protected virtual void PostProcess(T table) { }
-
-    /// <summary>
-    /// 处理完所有行数据
-    /// </summary>
-    protected virtual void OnAllTablesLoaded() { }
-
-    /// <summary>
-    /// 表格加载成功回调
-    /// </summary>
-    /// <param name="res"></param>
-    [System.Reflection.Obfuscation(Exclude = true, Feature = "renaming")]
-    public void OnResourceLoaded(TextAsset res)
-    {
-        byte[] raw_data = res.bytes;
-
-        byte[] data = new byte[raw_data.Length - 3];
-        for (int i = 0, imax = raw_data.Length - 3; i < imax; data[i] = raw_data[i + 3], ++i) ;
-
-        using (MemoryStream stream = new MemoryStream(data))
-        {
-            array = ProtoBuf.Serializer.Deserialize<TableArrayT>(stream);
-
-            System.Type type = array.GetType();
-            PropertyInfo pinfo = type.GetProperty("rows");
-            if (pinfo != null)
-            {
-                MethodInfo mInfo = pinfo.GetGetMethod();
-                if (mInfo != null)
+                PropertyInfo pinfo = null;
+                while (type != null)
                 {
-                    List<T> list = mInfo.Invoke(array, null) as List<T>;
-                    if (list != null)
+                    pinfo = type.GetProperty("Instance");
+
+                    if (pinfo != null)
                     {
-                        foreach (T table in list)
-                        {
-                            AddTable(table);
-                        }
+                        break;
                     }
+
+                    type = type.BaseType;
                 }
 
-                OnAllTablesLoaded();
+                if (pinfo == null)
+                {
+                    continue;
+                }
+
+                MethodInfo instMethod = pinfo.GetGetMethod();
+                if (instMethod == null)
+                {
+                    continue;
+                }
+
+                System.Object tblMgrInst = instMethod.Invoke(null, null);
+                if (tblMgrInst == null)
+                {
+                    continue;
+                }
+
+                //TODO:加载完成回调
+                Delegate dele = Delegate.CreateDelegate(typeof(OnLoaded), tblMgrInst, "OnResourceLoaded");
+                ((OnLoaded)dele)(tex);
+                //res.onLoaded += (Resource.OnLoaded)dele;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 表格管理
+    /// </summary>
+    /// <typeparam name="TableArrayT">表组</typeparam>
+    /// <typeparam name="T">表</typeparam>
+    /// <typeparam name="K">键值</typeparam>
+    /// <typeparam name="T_1">具体表管理器类名</typeparam>
+    public abstract class TableManager<TableArrayT, T, K, T_1> : TableSingleton<T_1>, IEnumerable
+    {
+        /// <summary>
+        /// 表组
+        /// </summary>
+        public TableArrayT array;
+
+        /// <summary>
+        /// 键
+        /// </summary>
+        public K key;
+
+        /// <summary>
+        /// 数据
+        /// </summary>
+        public readonly Dictionary<K, T> dic = new Dictionary<K, T>();
+
+        /// <summary>
+        /// 获得枚举器
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator GetEnumerator()
+        {
+            return dic.GetEnumerator();
+        }
+
+        /// <summary>
+        /// 增加表
+        /// </summary>
+        /// <param name="table"></param>
+        public void AddTable(T table)
+        {
+            K key = GetKey(table);
+
+            if (dic.ContainsKey(key))
+            {
+                Debug.LogError(string.Format("{0}'s key {1} exist!", array, key));
             }
             else
             {
-                Debug.LogError(string.Format("{0} does not has rows{1} exist!", array, key));
+                dic.Add(key, table);
+            }
+
+            PostProcess(table);
+        }
+
+        /// <summary>
+        /// 获取键值
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public abstract K GetKey(T table);
+
+        /// <summary>
+        /// 查表
+        /// </summary>
+        /// <param name="key">键值</param>
+        /// <param name="tbl">返回的表</param>
+        /// <returns></returns>
+        public virtual bool TryGetValue(K key, out T tbl)
+        {
+            if (!dic.TryGetValue(key, out tbl))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 处理完一行数据
+        /// </summary>
+        /// <param name="table"></param>
+        protected virtual void PostProcess(T table) { }
+
+        /// <summary>
+        /// 处理完所有行数据
+        /// </summary>
+        protected virtual void OnAllTablesLoaded() { }
+
+        /// <summary>
+        /// 表格加载成功回调
+        /// </summary>
+        /// <param name="res"></param>
+        [System.Reflection.Obfuscation(Exclude = true, Feature = "renaming")]
+        public void OnResourceLoaded(TextAsset res)
+        {
+            byte[] raw_data = res.bytes;
+
+            byte[] data = new byte[raw_data.Length - 3];
+            for (int i = 0, imax = raw_data.Length - 3; i < imax; data[i] = raw_data[i + 3], ++i) ;
+
+            using (MemoryStream stream = new MemoryStream(data))
+            {
+                array = ProtoBuf.Serializer.Deserialize<TableArrayT>(stream);
+
+                System.Type type = array.GetType();
+                PropertyInfo pinfo = type.GetProperty("rows");
+                if (pinfo != null)
+                {
+                    MethodInfo mInfo = pinfo.GetGetMethod();
+                    if (mInfo != null)
+                    {
+                        List<T> list = mInfo.Invoke(array, null) as List<T>;
+                        if (list != null)
+                        {
+                            foreach (T table in list)
+                            {
+                                AddTable(table);
+                            }
+                        }
+                    }
+
+                    OnAllTablesLoaded();
+                }
+                else
+                {
+                    Debug.LogError(string.Format("{0} does not has rows{1} exist!", array, key));
+                }
             }
         }
     }

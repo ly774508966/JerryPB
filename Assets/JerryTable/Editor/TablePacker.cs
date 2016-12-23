@@ -1,206 +1,105 @@
 ﻿using UnityEditor;
 using System.IO;
 using System.Diagnostics;
-using UnityEngine;
-using System.Collections.Generic;
 
-/// <summary>
-/// 打表工具
-/// </summary>
-public class TablePacker : Editor
+namespace Jerry
 {
-    #region 配置信息
-
-    private static string _toolsPath = "/table/tools/";
-
-    private static string _outputCommonCSPath = Application.dataPath + "/../table/output/common_cs/";
-    private static string _outputTableCSPath = Application.dataPath + "/../table/output/table_cs/";
-    private static string _outputTableDataPath = Application.dataPath + "/../table/output/table_data/";
-
-    private static string _unityCommonCSPath = Application.dataPath + "/Scripts/MSG/proto_gen/";
-    private static string _unityTableCSPath = Application.dataPath + "/Scripts/Table/proto_gen/";
-    private static string _unityTableDataPath = Application.dataPath + "/Resources/Table/";
-
-    #endregion 配置信息
-
     /// <summary>
-    /// 工程所在目录，是Assets的父目录
+    /// 打表工具
     /// </summary>
-    private static string dir;
-
-    [MenuItem("Assets/PackAndCopyTables")]
-    public static void PackAndCopyTables()
+    public class TablePacker : Editor
     {
-        DoPackTable(true, "PackAndCopyTables");
-    }
+        #region 配置信息
 
-    [MenuItem("Assets/PackTables")]
-    public static void PackTables()
-    {
-        DoPackTable(false, "PackTables");
-    }
+        private static string _toolsPath = "/table/tools/";
 
-    [MenuItem("Assets/CopyTables")]
-    public static void CopyTables()
-    {
-        CopyDirectory(_outputCommonCSPath, _unityCommonCSPath, false, new List<string> { "common_", ".cs" });
-        CopyDirectory(_outputTableCSPath, _unityTableCSPath, false, new List<string> { "c_table_", ".cs" });
-        CopyDirectory(_outputTableDataPath, _unityTableDataPath, false, new List<string> { "c_table_", ".bytes" });
-        AssetDatabase.SaveAssets();
-        AssetDatabase.Refresh();
-        UnityEngine.Debug.Log("CopyTables Finish");
-    }
+        #endregion 配置信息
 
-    private static void DoPackTable(bool copy = false, string flag = "")
-    {
-        dir = Directory.GetCurrentDirectory();
-        string toolsPath = dir + _toolsPath;
-        try
+        /// <summary>
+        /// 工程所在目录，是Assets的父目录
+        /// </summary>
+        private static string dir;
+
+        [MenuItem("Assets/JerryTable/PackAndCopy")]
+        public static void PackAndCopyTables()
         {
-            Directory.SetCurrentDirectory(toolsPath);
-            CallProcess("python.exe", string.Format("{0}{1} type-client_copy-{2}", toolsPath, "run_type-client_copy-0.py", copy ? "1" : "0"));
-            Directory.SetCurrentDirectory(dir);
-        }
-        catch (System.Exception ex)
-        {
-            UnityEngine.Debug.LogError(ex);
-            Directory.SetCurrentDirectory(dir);
+            DoPackTable(true, true, "PackAndCopyTables");
         }
 
-        if (copy)
+        [MenuItem("Assets/JerryTable/Pack")]
+        public static void PackTables()
         {
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
+            DoPackTable(true, false, "PackTables");
         }
-        UnityEngine.Debug.Log(flag + " Finish");
-    }
 
-    /// <summary>
-    /// 执行外部程序
-    /// </summary>
-    /// <param name="processName"></param>
-    /// <param name="param"></param>
-    /// <returns></returns>
-    private static bool CallProcess(string processName, string param)
-    {
-        ProcessStartInfo process = new ProcessStartInfo
+        [MenuItem("Assets/JerryTable/Copy")]
+        public static void CopyTables()
         {
-            CreateNoWindow = false,
-            UseShellExecute = false,
-            RedirectStandardError = true,
-            RedirectStandardOutput = true,
-            FileName = processName,
-            Arguments = param,
-        };
+            DoPackTable(false, true, "CopyTables");
+        }
 
-        UnityEngine.Debug.Log(processName + " " + param);
-
-        Process p = Process.Start(process);
-        p.StandardOutput.ReadToEnd();
-        p.WaitForExit();
-
-        string error = p.StandardError.ReadToEnd();
-        if (!string.IsNullOrEmpty(error))
+        private static void DoPackTable(bool pack = true, bool copy = false, string flag = "")
         {
-            UnityEngine.Debug.LogError(processName + " " + param + "  ERROR! " + "\n" + error);
-
-            string output = p.StandardOutput.ReadToEnd();
-            if (!string.IsNullOrEmpty(output))
+            dir = Directory.GetCurrentDirectory();
+            string toolsPath = dir + _toolsPath;
+            try
             {
-                UnityEngine.Debug.Log(output);
+                Directory.SetCurrentDirectory(toolsPath);
+                CallProcess("python.exe", string.Format("{0}{1} type-{2}_copy-{3}", toolsPath, "run.py", pack ? "client" : "none", copy ? "1" : "0"));
+                Directory.SetCurrentDirectory(dir);
             }
-            return false;
-        }
-        return true;
-    }
+            catch (System.Exception ex)
+            {
+                UnityEngine.Debug.LogError(ex);
+                Directory.SetCurrentDirectory(dir);
+            }
 
-    /// <summary>
-    /// 文件名过滤
-    /// </summary>
-    /// <param name="fileName"></param>
-    /// <param name="fileNameFilter"></param>
-    /// <param name="include"></param>
-    /// <returns>通过</returns>
-    private static bool FileNameFilter(string fileName, List<string> fileNameFilter = null, bool include = true)
-    {
-        if (fileNameFilter == null
-            || fileNameFilter.Count <= 0
-            || string.IsNullOrEmpty(fileName))
+            if (copy)
+            {
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
+            }
+
+            UnityEngine.Debug.Log(flag + " Finish " + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+        }
+
+        /// <summary>
+        /// 执行外部程序
+        /// </summary>
+        /// <param name="processName"></param>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        private static bool CallProcess(string processName, string param)
         {
+            ProcessStartInfo process = new ProcessStartInfo
+            {
+                CreateNoWindow = false,
+                UseShellExecute = false,
+                RedirectStandardError = true,
+                RedirectStandardOutput = true,
+                FileName = processName,
+                Arguments = param,
+            };
+
+            UnityEngine.Debug.Log(processName + " " + param);
+
+            Process p = Process.Start(process);
+            p.StandardOutput.ReadToEnd();
+            p.WaitForExit();
+
+            string error = p.StandardError.ReadToEnd();
+            if (!string.IsNullOrEmpty(error))
+            {
+                UnityEngine.Debug.LogError(processName + " " + param + "  ERROR! " + "\n" + error);
+
+                string output = p.StandardOutput.ReadToEnd();
+                if (!string.IsNullOrEmpty(output))
+                {
+                    UnityEngine.Debug.Log(output);
+                }
+                return false;
+            }
             return true;
-        }
-        foreach (string filter in fileNameFilter)
-        {
-            if (include)
-            {
-                if (!fileName.Contains(filter))
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                if (fileName.Contains(filter))
-                {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    private static void CopyDirectory(string pathFrom, string pathTo, bool clean = false, List<string> fileNameFilter = null, List<string> fileNameNotFilter = null)
-    {
-        if (string.IsNullOrEmpty(pathFrom) ||
-            string.IsNullOrEmpty(pathTo))
-        {
-            return;
-        }
-
-        if (Directory.Exists(pathFrom) == false)
-        {
-            return;
-        }
-
-        if (clean)
-        {
-            if (Directory.Exists(pathTo))
-            {
-                Directory.Delete(pathTo, true);
-            }
-            Directory.CreateDirectory(pathTo);
-        }
-        else
-        {
-            if (!Directory.Exists(pathTo))
-            {
-                Directory.CreateDirectory(pathTo);
-            }
-        }
-
-        string[] files = Directory.GetFiles(pathFrom);
-        string fileName;
-        foreach (string file in files)
-        {
-            fileName = Path.GetFileName(file);
-            if (FileNameFilter(fileName, fileNameFilter, true) == false || FileNameFilter(fileName, fileNameNotFilter, false) == false)
-            {
-                continue;
-            }
-            //不做删除的话，同名文件，只是大小写不一样，文件名不会替换
-            if (File.Exists(pathTo + "/" + fileName))
-            {
-                File.Delete(pathTo + "/" + fileName);
-            }
-            File.Copy(pathFrom + "/" + fileName, pathTo + "/" + fileName, true);
-        }
-
-        string[] directs = Directory.GetDirectories(pathFrom);
-        string directName;
-        foreach (string direct in directs)
-        {
-            directName = Path.GetFileName(direct);
-            CopyDirectory(direct, pathTo + "/" + directName, clean, fileNameFilter, fileNameNotFilter);
         }
     }
 }

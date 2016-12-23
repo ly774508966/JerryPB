@@ -1,4 +1,6 @@
-﻿[System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
+﻿using Jerry;
+
+[System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
 public class TestATableManager : TableManager<Table.TestA_ARRAY, Table.TestA, int, TestATableManager>
 {
     public override int GetKey(Table.TestA table)
@@ -8,10 +10,15 @@ public class TestATableManager : TableManager<Table.TestA_ARRAY, Table.TestA, in
 }
 
 [System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
-public class TestBTableManager : TableManager<Table.TestB_ARRAY, Table.TestB, int, TestBTableManager>
+public class TestBTableManager : TableManager<Table.TestB_ARRAY, Table.TestB, long, TestBTableManager>
 {
-    public override int GetKey(Table.TestB table)
+    public static long MakeKey(int id1, int id2)
     {
-        return table.id1;
+        return (((long)id1) << 32) + id2;
+    }
+
+    public override long GetKey(Table.TestB table)
+    {
+        return MakeKey(table.id1, table.id2);
     }
 }
