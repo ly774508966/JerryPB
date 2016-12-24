@@ -15,7 +15,7 @@ public class TableSingleton<T>
     /// <summary>
     /// 单例
     /// </summary>
-    public static T Instance
+    public static T Inst
     {
         get
         {

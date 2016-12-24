@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System;
 
 namespace Jerry
 {
@@ -15,10 +16,14 @@ namespace Jerry
             public string resPath;
             public OnLoaded callBack;
 
-            public Loader(string resPath, OnLoaded callBack)
+            public Loader(string resPath, OnLoaded callBack, Action handleBack)
             {
                 this.resPath = resPath;
                 this.callBack = callBack;
+                if (handleBack != null)
+                {
+                    handleBack();
+                }
             }
         }
 
@@ -101,6 +106,8 @@ namespace Jerry
             return true;
         }
 
+        public Action onTblComplete = null;
+
         /// <summary>
         /// 处理完一行数据
         /// </summary>
@@ -110,13 +117,19 @@ namespace Jerry
         /// <summary>
         /// 处理完所有行数据
         /// </summary>
-        protected virtual void OnAllTablesLoaded() { }
+        public virtual void OnTblComplete()
+        {
+            if (onTblComplete != null)
+            {
+                onTblComplete();
+            }
+        }
 
         /// <summary>
         /// 表格加载成功回调
         /// </summary>
         /// <param name="res"></param>
-        public void OnResourceLoaded(TextAsset res)
+        public void OnResLoaded(TextAsset res)
         {
             byte[] raw_data = res.bytes;
 
@@ -144,7 +157,7 @@ namespace Jerry
                         }
                     }
 
-                    OnAllTablesLoaded();
+                    OnTblComplete();
                 }
                 else
                 {
