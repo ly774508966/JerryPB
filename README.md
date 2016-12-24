@@ -3,9 +3,35 @@
 标题 | ProtobufTools
 标签 | ProtobufTools、Protobuf、Unity、表格
 备注 | 对Unity无依赖
-最近更新 | 2016-12-24 00:41:52
+最近更新 | 2016-12-25 00:35:32
 
 ## 使用
+
+使用步骤：（具体见样例工程，包括DLL工程和源码工程）
+- 把工具放到`Assets`平行位置，工具说明见`补充:工具`
+- `Unity`工程的`Plugins`里加入`JerryTable.dll`和`protobuf-net.dll`
+- 新建一个Excel表，放到table文件夹，建议用英文命名
+    - Excel文件代表的是表集合，同系统的表可以放一个Excel文件，里边的一个Sheet才是一个具体的表
+    - 新建一个Sheet，命名为`xx_name`，`xx`的值可以是（命名不合规则的默认是`none_name`）：
+        - `all` 服务器和客户端都用
+        - `client` 仅客户端用
+        - `server` 仅服务器用
+        - `none` 不会打成表，用来做说明备注的
+    - 填充一个Sheet，格式如`补充:表格格式` 
+- 关闭所有要打的表所在的Excel文件
+- 配置`tools\config.py`中的
+    - `self.unity_table_cs_path`
+    - `self.unity_table_data_path`
+    - `self.unity_common_cs_path`
+- 运行Unity里的`Assets/JerryTable`下的指令进行打表，会自动拷贝到相应目录，更多见`补充:指令细节`
+- 使用：参考`GameApp.cs`和`MyTableLoader.cs`
+    - `MyTableLoader.cs`注册新表，处理加载（你可以自定义选择用从Resources或AssetBundle加载）
+    - `GameApp.cs`里使用
+        - 查找表，主键可以自己定义，单键或者组合键
+
+---
+
+### 补充:工具
 
 工具目录如下：
 - table
@@ -21,34 +47,6 @@
             - `common_xxx`要手动写
     - table 表格文件
     - tools 工具
-
-使用步骤：
-- 新建一个Excel表，放到table文件夹，建议用英文命名
-    - Excel文件代表的是表集合，同系统的表可以放一个Excel文件，里边的一个Sheet才是一个具体的表
-    - 新建一个Sheet，命名为`xx_name`，`xx`的值可以是（命名不合规则的默认是`none_name`）：
-        - `all` 服务器和客户端都用
-        - `client` 仅客户端用
-        - `server` 仅服务器用
-        - `none` 不会打成表，用来做说明备注的
-    - 填充一个Sheet，格式如`补充:表格格式` 
-- 关闭所有要打的表所在的Excel文件
-- 配置`tools\config.py`中的
-    - `self.unity_table_cs_path`
-    - `self.unity_table_data_path`
-    - `self.unity_common_cs_path`
-- 运行`tools\run_type-client_copy--py`，log在`table_tools.log`
-    - 参数说明
-        - type 打表类型，这里打客户端表
-        - copy 是否拷贝到Unity工程，这是设置：`是`
-    - 相应的数据就在Unity工程了
-    - 或者运行Unity里的`Assets/JerryTable`下的指令
-- 使用
-    - `TableDesc.cs`注册一个新表
-    - `GameApp.cs`里
-        - `LoadTables();` 加载表，你可以自定义选择用从Resources或AssetBundle加载
-        - 查找表，主键可以自己定义，单键或者组合键
-
----
 
 ### 补充:表格格式
 
@@ -105,3 +103,12 @@ message StructTest
 ```
 
 说明：枚举值需要填写默认值
+
+### 补充:指令细节
+
+指令运行的是`tools\run.py`，可以手动运行：
+- 运行`tools\run_type-client_copy--py`，log在`table_tools.log`
+    - 参数说明
+        - type 打表类型，这里打客户端表
+        - copy 是否拷贝到Unity工程，这是设置：`是`
+    - 相应的数据就在Unity工程了
