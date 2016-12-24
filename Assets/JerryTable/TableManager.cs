@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -11,54 +10,19 @@ namespace Jerry
     {
         public delegate void OnLoaded(TextAsset res);
 
-        public OnLoaded LoadTable(string tableName)
+        public class Loader
         {
-            if (string.IsNullOrEmpty(tableName))
+            public string resPath;
+            public OnLoaded callBack;
+
+            public Loader(string resPath, OnLoaded callBack)
             {
-                return null;
+                this.resPath = resPath;
+                this.callBack = callBack;
             }
-
-            string tableMgrName = tableName + "TableManager";
-            Type type = Type.GetType(tableMgrName);
-            if (type == null)
-            {
-                Debug.LogError(string.Format("{0} is Not Defined!", tableMgrName));
-                return null;
-            }
-
-            PropertyInfo pinfo = null;
-            while (type != null)
-            {
-                pinfo = type.GetProperty("Instance");
-
-                if (pinfo != null)
-                {
-                    break;
-                }
-
-                type = type.BaseType;
-            }
-
-            if (pinfo == null)
-            {
-                return null;
-            }
-
-            MethodInfo instMethod = pinfo.GetGetMethod();
-            if (instMethod == null)
-            {
-                return null;
-            }
-
-            System.Object tblMgrInst = instMethod.Invoke(null, null);
-            if (tblMgrInst == null)
-            {
-                return null;
-            }
-
-            Delegate dele = Delegate.CreateDelegate(typeof(OnLoaded), tblMgrInst, "OnResourceLoaded");
-            return (OnLoaded)dele;
         }
+
+        public List<Loader> loaders = new List<Loader>();
     }
 
     /// <summary>
@@ -73,17 +37,17 @@ namespace Jerry
         /// <summary>
         /// 表组
         /// </summary>
-        public TableArrayT array;
+        protected TableArrayT array;
 
         /// <summary>
         /// 键
         /// </summary>
-        public K key;
+        protected K key;
 
         /// <summary>
         /// 数据
         /// </summary>
-        public readonly Dictionary<K, T> dic = new Dictionary<K, T>();
+        protected readonly Dictionary<K, T> dic = new Dictionary<K, T>();
 
         /// <summary>
         /// 获得枚举器
@@ -98,7 +62,7 @@ namespace Jerry
         /// 增加表
         /// </summary>
         /// <param name="table"></param>
-        public void AddTable(T table)
+        protected void AddTable(T table)
         {
             K key = GetKey(table);
 
@@ -119,7 +83,7 @@ namespace Jerry
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        public abstract K GetKey(T table);
+        protected abstract K GetKey(T table);
 
         /// <summary>
         /// 查表
@@ -152,7 +116,6 @@ namespace Jerry
         /// 表格加载成功回调
         /// </summary>
         /// <param name="res"></param>
-        [System.Reflection.Obfuscation(Exclude = true, Feature = "renaming")]
         public void OnResourceLoaded(TextAsset res)
         {
             byte[] raw_data = res.bytes;
