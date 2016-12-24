@@ -26,7 +26,6 @@ public class TableMgr : TableSingleton<TableMgr>
     }
 }
 
-[System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
 public class TestATableManager : TableManager<Table.TestA_ARRAY, Table.TestA, int, TestATableManager>
 {
     protected override int GetKey(Table.TestA table)
@@ -35,7 +34,6 @@ public class TestATableManager : TableManager<Table.TestA_ARRAY, Table.TestA, in
     }
 }
 
-[System.Reflection.Obfuscation(ApplyToMembers = false, Exclude = true, Feature = "renaming")]
 public class TestBTableManager : TableManager<Table.TestB_ARRAY, Table.TestB, long, TestBTableManager>
 {
     public static long MakeKey(int id1, int id2)
