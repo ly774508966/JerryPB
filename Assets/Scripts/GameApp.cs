@@ -9,8 +9,8 @@ public class GameApp : MonoBehaviour
     void Awake()
     {
         JerryDebug.Set(true, false, false, true, typeof(ProtoBuf.ProtoMemberAttribute));
-
-        this.StartCoroutine(TableMgr.Inst.LoadTables(() =>
+        
+        this.StartCoroutine(MyTableLoader.Inst.LoadTables(() =>
         {
             _isTableOK = true;
         }));

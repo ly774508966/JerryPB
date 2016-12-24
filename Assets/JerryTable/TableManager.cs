@@ -7,27 +7,81 @@ using System;
 
 namespace Jerry
 {
-    public class TableLoader : TableSingleton<TableLoader>
+    public class Loader
     {
         public delegate void OnLoaded(TextAsset res);
 
-        public class Loader
-        {
-            public string resPath;
-            public OnLoaded callBack;
+        private ITableManager tblMgr;
+        public string resPath;
+        public OnLoaded loadedCallback;
 
-            public Loader(string resPath, OnLoaded callBack, Action handleBack)
+        public Loader(ITableManager tblMgr, string resPath)
+        {
+            this.tblMgr = tblMgr;
+            this.resPath = resPath;
+            loadedCallback += this.tblMgr.OnResLoaded;
+        }
+
+        public void SetHandleBack(Action handleBack)
+        {
+            this.tblMgr.SetHandleCallback(handleBack);
+        }
+    }
+
+    public class TableLoader<T> : TableSingleton<T>
+    {
+        protected List<Loader> _loaders = new List<Loader>();
+        
+        private Action _allTblComplete;
+        private int _cnt;
+
+        public int Cnt
+        {
+            get { return _cnt; }
+        }
+
+        public TableLoader()
+        {
+            _cnt = 0;
+            _allTblComplete = null;
+            _loaders.Clear();
+        }
+
+        protected void AddLoader(Loader loader)
+        {
+            if (loader == null)
             {
-                this.resPath = resPath;
-                this.callBack = callBack;
-                if (handleBack != null)
+                return;
+            }
+            this._cnt++;
+            loader.SetHandleBack(() => { this._cnt--; });
+            _loaders.Add(loader);
+        }
+
+        public virtual IEnumerator LoadTables(Action allTblComplete = null)
+        {
+            this._allTblComplete = allTblComplete;
+            yield return null;
+        }
+
+        protected IEnumerator WaitAllTableLoaded()
+        {
+            if (this._allTblComplete != null)
+            {
+                yield return new WaitUntil(() => this.Cnt == 0);
+
+                if (this._allTblComplete != null)
                 {
-                    handleBack();
+                    this._allTblComplete();
                 }
             }
         }
+    }
 
-        public List<Loader> loaders = new List<Loader>();
+    public interface ITableManager
+    {
+        void SetHandleCallback(Action callback);
+        void OnResLoaded(TextAsset res);
     }
 
     /// <summary>
@@ -37,7 +91,7 @@ namespace Jerry
     /// <typeparam name="T">表</typeparam>
     /// <typeparam name="K">键值</typeparam>
     /// <typeparam name="T_1">具体表管理器类名</typeparam>
-    public abstract class TableManager<TableArrayT, T, K, T_1> : TableSingleton<T_1>, IEnumerable
+    public abstract class TableManager<TableArrayT, T, K, T_1> : TableSingleton<T_1>, IEnumerable, ITableManager
     {
         /// <summary>
         /// 表组
@@ -106,7 +160,7 @@ namespace Jerry
             return true;
         }
 
-        public Action onTblComplete = null;
+        protected Action onTblComplete = null;
 
         /// <summary>
         /// 处理完一行数据
@@ -117,12 +171,17 @@ namespace Jerry
         /// <summary>
         /// 处理完所有行数据
         /// </summary>
-        public virtual void OnTblComplete()
+        protected virtual void OnTblComplete()
         {
             if (onTblComplete != null)
             {
                 onTblComplete();
             }
+        }
+
+        public void SetHandleCallback(Action callback)
+        {
+            onTblComplete += callback;
         }
 
         /// <summary>
