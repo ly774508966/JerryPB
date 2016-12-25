@@ -9,11 +9,9 @@ namespace Jerry
 {
     public class Loader
     {
-        public delegate void OnLoaded(TextAsset res);
-
         private ITableManager tblMgr;
         public string resPath;
-        public OnLoaded loadedCallback;
+        public Action<TextAsset> loadedCallback;
 
         public Loader(ITableManager tblMgr, string resPath)
         {

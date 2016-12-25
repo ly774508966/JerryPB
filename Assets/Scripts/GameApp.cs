@@ -1,19 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Jerry;
+using System;
 
 public class GameApp : MonoBehaviour
 {
+#if TableFromAB
+    private bool _isJABOK = false;
+#endif
     private bool _isTableOK = false;
 
     void Awake()
     {
         JerryDebug.Set(true, false, false, true, typeof(ProtoBuf.ProtoMemberAttribute));
-        
+
+#if TableFromAB
+        this.StartCoroutine(InitializeJAB(() =>
+        {
+            _isJABOK = true;
+
+            this.StartCoroutine(MyTableLoader.Inst.LoadTables(() =>
+            {
+                _isTableOK = true;
+            }));
+        }));
+#else
         this.StartCoroutine(MyTableLoader.Inst.LoadTables(() =>
         {
             _isTableOK = true;
         }));
+#endif
     }
 
     void Start()
@@ -23,6 +39,9 @@ public class GameApp : MonoBehaviour
 
     private IEnumerator WaitResOK()
     {
+#if TableFromAB
+        yield return new WaitUntil(() => this._isJABOK == true);
+#endif
         yield return new WaitUntil(() => this._isTableOK == true);
         GameStart();
     }
@@ -49,4 +68,22 @@ public class GameApp : MonoBehaviour
             Debug.LogError("not exist");
         }
     }
+
+#if TableFromAB
+    private IEnumerator InitializeJAB(Action callback = null)
+    {
+        JABMgr.Set(JABUtil.JPlatformName.Android);
+
+        JABLoadManifestOperation request = JABMgr.LoadManifest();
+        if (request != null)
+        {
+            yield return this.StartCoroutine(request);
+        }
+
+        if (callback != null)
+        {
+            callback();
+        }
+    }
+#endif
 }

@@ -8,25 +8,34 @@ public class MyTableLoader : TableLoader<MyTableLoader>
     public MyTableLoader()
         : base()
     {
+#if TableFromAB
+        AddLoader(new Loader(TestATblMgr.Inst, "c_table_TestA"));
+        AddLoader(new Loader(TestBTblMgr.Inst, "c_table_TestB"));
+#else
         AddLoader(new Loader(TestATblMgr.Inst, "Table/c_table_TestA"));
         AddLoader(new Loader(TestBTblMgr.Inst, "Table/c_table_TestB"));
+#endif
     }
 
     public override IEnumerator LoadTables(Action allTblComplete = null)
     {
         yield return base.LoadTables(allTblComplete);
-        
+
         foreach (Loader loader in _loaders)
         {
             //Load tables start
+#if TableFromAB
+            JABMgr.LoadAssetAsync<TextAsset>("table_bundle", loader.resPath, loader.loadedCallback);
+#else
             TextAsset tex = Resources.Load<TextAsset>(loader.resPath);
             if (loader.loadedCallback != null)
             {
                 loader.loadedCallback(tex);
             }
+#endif
             //Load tables end
         }
-        
+
         yield return this.WaitAllTableLoaded();
     }
 }

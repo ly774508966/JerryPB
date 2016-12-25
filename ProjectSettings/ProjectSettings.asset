@@ -336,7 +336,8 @@ PlayerSettings:
   psp2InfoBarColor: 0
   psmSplashimage: {fileID: 0}
   spritePackerPolicy: DefaultPackerPolicy
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    7: TableFromAB
   metroPackageName: _2D v3
   metroPackageVersion: 
   metroCertificatePath: 
