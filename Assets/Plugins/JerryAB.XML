@@ -1,0 +1,219 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JerryAB</name>
+    </assembly>
+    <members>
+        <member name="T:Jerry.JABMgr">
+            <summary>
+            Class takes care of loading assetBundle and its dependencies automatically, loading variants automatically.
+            </summary>
+        </member>
+        <member name="F:Jerry.JABMgr.m_ActiveVariants">
+            <summary>
+            设定要使用的变体名
+            </summary>
+        </member>
+        <member name="F:Jerry.JABMgr.m_AssetBundleManifest">
+            <summary>
+            根Manifest
+            </summary>
+        </member>
+        <member name="F:Jerry.JABMgr.m_LoadedAssetBundles">
+            <summary>
+            加载好缓存的资源
+            </summary>
+        </member>
+        <member name="F:Jerry.JABMgr.m_DownloadingWWWs">
+            <summary>
+            正在加载的资源
+            </summary>
+        </member>
+        <member name="F:Jerry.JABMgr.m_DownloadingErrors">
+            <summary>
+            加载错误，AssetBundle2ErrorStr
+            </summary>
+        </member>
+        <member name="F:Jerry.JABMgr.m_InProgressOperations">
+            <summary>
+            操作队列
+            </summary>
+        </member>
+        <member name="F:Jerry.JABMgr.m_Dependencies">
+            <summary>
+            依赖表
+            </summary>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadAssetBundle(System.String,System.Boolean)">
+            <summary>
+            Load AssetBundle and its dependencies.
+            </summary>
+            <param name="assetBundleName"></param>
+            <param name="isLoadingAssetBundleManifest">是否是加载Manifest</param>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadAssetBundleInternal(System.String,System.Boolean,UnityEngine.WWW@)">
+            <summary>
+            <para>开放给外界，可以预先加载AB，并且统计进度</para>
+            <para>Where we actuall call WWW to download the assetBundle.</para>
+            </summary>
+            <param name="assetBundleName"></param>
+            <param name="isLoadingAssetBundleManifest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadDependencies(System.String)">
+            <summary>
+            <para>加载依赖</para>
+            <para>Where we get all the dependencies and load them all.</para>
+            </summary>
+            <param name="assetBundleName"></param>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadAssetAsync``1(System.String,System.String,System.Action{``0})">
+            <summary>
+            异步加载，回调形式，不用关心过程
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="assetBundleName">包含变体</param>
+            <param name="assetName"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadAssetAsync``1(System.String,System.String)">
+            <summary>
+            异步加载，返回Operation，可以自己控制多个加载的时序
+            </summary>
+            <param name="assetBundleName">包含变体</param>
+            <param name="assetName"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadLevelAsync(System.String,System.String,System.Boolean,System.Action{System.Boolean})">
+            <summary>
+            异步加载，回调形式，不用关心过程
+            </summary>
+            <param name="assetBundleName">包含变体</param>
+            <param name="assetName"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadLevelAsync(System.String,System.String,System.Boolean)">
+            <summary>
+            Load level from the given assetBundle.
+            </summary>
+            <param name="assetBundleName">包含变体</param>
+            <param name="levelName"></param>
+            <param name="isAdditive"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABMgr.LoadManifest">
+            <summary>
+            加载Manifest
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABMgr.UnloadAssetBundle(System.String)">
+            <summary>
+            Unload assetbundle and its dependencies.
+            </summary>
+            <param name="assetBundleName"></param>
+        </member>
+        <member name="M:Jerry.JABMgr.GetLoadedAssetBundle(System.String,System.String@)">
+            <summary>
+            <para>获得加载好的AssetBundle，依赖都加载好了才算好</para>
+            <para>Get loaded AssetBundle, only return vaild object when all the dependencies are downloaded successfully.</para>
+            </summary>
+            <param name="assetBundleName"></param>
+            <param name="error"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABMgr.RemapVariantName(System.String)">
+            <summary>
+            bundle名检查变体
+            </summary>
+            <param name="assetBundleName"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Jerry.JABMgr.AssetBundleManifestObject">
+            <summary>
+            <para>根Manifest</para>
+            <para>AssetBundleManifest object which can be used to load the dependecies and check suitable assetBundle variants.</para>
+            </summary>
+        </member>
+        <member name="P:Jerry.JABMgr.BaseDownloadingURL">
+            <summary>
+            The base downloading url which is used to generate the full downloading url with the assetBundle names.
+            </summary>
+        </member>
+        <member name="T:Jerry.LoadedAssetBundle">
+            <summary>
+            <para>Loaded assetBundle contains the references count which can be used to unload dependent assetBundles automatically.</para>
+            <para>加载好的Bundle</para>
+            </summary>
+        </member>
+        <member name="F:Jerry.LoadedAssetBundle.m_AssetBundle">
+            <summary>
+            Bundle
+            </summary>
+        </member>
+        <member name="F:Jerry.LoadedAssetBundle.m_ReferencedCount">
+            <summary>
+            引用计数
+            </summary>
+        </member>
+        <member name="F:Jerry.JABUtil.CurPlatform">
+            <summary>
+            当前平台
+            </summary>
+        </member>
+        <member name="T:Jerry.JABUtil.JPlatformName">
+            <summary>
+            平台
+            </summary>
+        </member>
+        <member name="M:Jerry.BuildScript.FileNameFilter(System.String,System.Collections.Generic.List{System.String},System.Boolean)">
+            <summary>
+            文件名过滤
+            </summary>
+            <param name="fileName"></param>
+            <param name="fileNameFilter"></param>
+            <param name="include"></param>
+            <returns>通过</returns>
+        </member>
+        <member name="T:Jerry.JABLoadOperation">
+            <summary>
+            <para>AssetBundle加载操作</para>
+            <para>加载资源(Asset)的时候，等候AssetBundle的加载成功，再去AssetBundle里加载</para>
+            </summary>
+        </member>
+        <member name="M:Jerry.JABLoadOperation.Update">
+            <summary>
+            <para>等候m_Request构建好</para>
+            <para>返回值表示是否还需要更新</para>
+            <para>出错了将不再更新</para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABLoadOperation.IsDone">
+            <summary>
+            <para>是否正常加载完成</para>
+            <para>报错了是false</para>
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABLoadResOperation.Update">
+            <summary>
+            true表示还要子类处理
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABLoadAssetOperation.Update">
+            <summary>
+            Returns true if more Update calls are required.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Jerry.JABLoadManifestOperation.Update">
+            <summary>
+            Manifest的特殊化处理
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

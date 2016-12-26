@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>JerryDebug</name>
+    </assembly>
+    <members>
+        <member name="F:Jerry.JerryDebug.MAX_MSG_CNT">
+            <summary>
+            单类最大日志量
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_OutScreen">
+            <summary>
+            输出到屏幕
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_OutFile">
+            <summary>
+            输出到文件
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_OutConsole">
+            <summary>
+            输出到控制台
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_DoOnGUI">
+            <summary>
+            刷新OnGUI
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_Active">
+            <summary>
+            是否启用
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_ReceiveMsg">
+            <summary>
+            <para>是否接收消息</para>
+            <para>可以暂停接收消息</para>
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_LogDeleteByTime">
+            <summary>
+            多余日志按时间顺序删除
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.LOG_FILE_PATH">
+            <summary>
+            LOG文件目录
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_OriginalTypes">
+            <summary>
+            按原始类型输出的类型，其他当做结构
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug._typeOfProtoMemberAttribute">
+            <summary>
+            typeof(ProtoBuf.ProtoMemberAttribute)
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_instance">
+            <summary>
+            单例
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_listMsgList">
+            <summary>
+            消息列表
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_vtScrollView">
+            <summary>
+            Log面板当前浏览进度
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_oneHeight">
+            <summary>
+            低端控制按钮高度
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_ShowNewer">
+            <summary>
+            是否显示最新的
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_Help">
+            <summary>
+            是否显示帮助
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_ShowError">
+            <summary>
+            是否显示错误
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_ShowWarning">
+            <summary>
+            是否显示警告
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_ShowInfo">
+            <summary>
+            是否显示普通信息
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_rect">
+            <summary>
+            窗口大小
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_recHelp">
+            <summary>
+            帮助面板大小
+            </summary>
+        </member>
+        <member name="M:Jerry.JerryDebug.Set(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="console"></param>
+            <param name="screen"></param>
+            <param name="file"></param>
+            <param name="editor"></param>
+            <param name="typeOfProtoMemberAttribute">为了不依赖，独立设置，typeof(ProtoBuf.ProtoMemberAttribute)</param>
+        </member>
+        <member name="M:Jerry.JerryDebug.LogInfo(System.Object,System.Boolean)">
+            <summary>
+            LOG
+            </summary>
+            <param name="msg"></param>
+            <param name="type"></param>
+            <param name="isProtoMsg"></param>
+        </member>
+        <member name="M:Jerry.JerryDebug.LogWarn(System.Object,System.Boolean)">
+            <summary>
+            LOG
+            </summary>
+            <param name="msg"></param>
+            <param name="type"></param>
+            <param name="isProtoMsg"></param>
+        </member>
+        <member name="M:Jerry.JerryDebug.LogError(System.Object,System.Boolean)">
+            <summary>
+            LOG
+            </summary>
+            <param name="msg"></param>
+            <param name="type"></param>
+            <param name="isProtoMsg"></param>
+        </member>
+        <member name="M:Jerry.JerryDebug.PrintList(System.Collections.IList,System.Int32)">
+            <summary>
+            输出List
+            </summary>
+            <param name="list"></param>
+            <param name="indent"></param>
+        </member>
+        <member name="M:Jerry.JerryDebug.AddLog(System.Object,Jerry.JerryDebug.LogType,System.Boolean)">
+            <summary>
+            AddLog
+            </summary>
+            <param name="msg"></param>
+            <param name="logType"></param>
+            <param name="isProtoMsg"></param>
+        </member>
+        <member name="M:Jerry.JerryDebug.AddToFile(System.String)">
+            <summary>
+            增加到文件输出
+            </summary>
+            <param name="strMsg"></param>
+        </member>
+        <member name="M:Jerry.JerryDebug.FillBottomCtr">
+            <summary>
+            填充下面操作
+            </summary>
+        </member>
+        <member name="M:Jerry.JerryDebug.FillCtrButton">
+            <summary>
+            填充控制面板
+            </summary>
+        </member>
+        <member name="M:Jerry.JerryDebug.RefreshUI(System.Int32)">
+            <summary>
+            刷新信息
+            </summary>
+        </member>
+        <member name="T:Jerry.JerryDebug.LogType">
+            <summary>
+            Log类型
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.LogType.Info">
+            <summary>
+            信息
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.LogType.Warning">
+            <summary>
+            警告
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.LogType.Error">
+            <summary>
+            错误
+            </summary>
+        </member>
+        <member name="T:Jerry.JerryDebug.MsgInfo">
+            <summary>
+            消息信息
+            </summary>
+        </member>
+    </members>
+</doc>
