@@ -12,7 +12,7 @@ public class GameApp : MonoBehaviour
 
     void Awake()
     {
-        JerryDebug.Set(true, false, false, true, typeof(ProtoBuf.ProtoMemberAttribute));
+        JerryDebug.Inst.Set(true, false, false, true, false, typeof(ProtoBuf.ProtoMemberAttribute));
 
 #if TableFromAB
         this.StartCoroutine(InitializeJAB(() =>
@@ -51,7 +51,7 @@ public class GameApp : MonoBehaviour
         Table.TestA testA = null;
         if (TestATblMgr.Inst.TryGetValue(10000, out testA))
         {
-            JerryDebug.LogInfo(testA, true);
+            JerryDebug.Inst.LogInfo(testA, JerryDebug.LogChannel.Channel_All, true);
         }
         else
         {
@@ -61,7 +61,7 @@ public class GameApp : MonoBehaviour
         Table.TestB testB = null;
         if (TestBTblMgr.Inst.TryGetValue(TestBTblMgr.MakeKey(10000, 10000), out testB))
         {
-            JerryDebug.LogInfo(testB, true);
+            JerryDebug.Inst.LogInfo(testB, JerryDebug.LogChannel.Channel_All, true);
         }
         else
         {
