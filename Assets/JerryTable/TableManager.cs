@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System;
 
-//version: 2016-12-27-00
+//version: 2016-12-29-00
 namespace Jerry
 {
     public class Loader
@@ -27,7 +27,7 @@ namespace Jerry
         }
     }
 
-    public class TableLoader<T> : TableSingleton<T>
+    public class TableLoader<T> : Singleton<T>
     {
         protected List<Loader> _loaders = new List<Loader>();
         
@@ -90,7 +90,7 @@ namespace Jerry
     /// <typeparam name="T">表</typeparam>
     /// <typeparam name="K">键值</typeparam>
     /// <typeparam name="T_1">具体表管理器类名</typeparam>
-    public abstract class TableManager<TableArrayT, T, K, T_1> : TableSingleton<T_1>, IEnumerable, ITableManager
+    public abstract class TableManager<TableArrayT, T, K, T_1> : Singleton<T_1>, IEnumerable, ITableManager
     {
         /// <summary>
         /// 表组
