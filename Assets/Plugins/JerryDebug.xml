@@ -60,11 +60,6 @@
             typeof(ProtoBuf.ProtoMemberAttribute)
             </summary>
         </member>
-        <member name="F:Jerry.JerryDebug.m_instance">
-            <summary>
-            单例
-            </summary>
-        </member>
         <member name="F:Jerry.JerryDebug.m_listMsgList">
             <summary>
             消息列表
@@ -115,7 +110,7 @@
             帮助面板大小
             </summary>
         </member>
-        <member name="M:Jerry.JerryDebug.Set(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Type)">
+        <member name="M:Jerry.JerryDebug.Set(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Type)">
             <summary>
             
             </summary>
@@ -123,9 +118,10 @@
             <param name="screen"></param>
             <param name="file"></param>
             <param name="editor"></param>
+            <param name="isOnlyUseInEditor"></param>
             <param name="typeOfProtoMemberAttribute">为了不依赖，独立设置，typeof(ProtoBuf.ProtoMemberAttribute)</param>
         </member>
-        <member name="M:Jerry.JerryDebug.LogInfo(System.Object,System.Boolean)">
+        <member name="M:Jerry.JerryDebug.LogInfo(System.Object,Jerry.JerryDebug.LogChannel,System.Boolean)">
             <summary>
             LOG
             </summary>
@@ -133,7 +129,7 @@
             <param name="type"></param>
             <param name="isProtoMsg"></param>
         </member>
-        <member name="M:Jerry.JerryDebug.LogWarn(System.Object,System.Boolean)">
+        <member name="M:Jerry.JerryDebug.LogWarn(System.Object,Jerry.JerryDebug.LogChannel,System.Boolean)">
             <summary>
             LOG
             </summary>
@@ -141,7 +137,7 @@
             <param name="type"></param>
             <param name="isProtoMsg"></param>
         </member>
-        <member name="M:Jerry.JerryDebug.LogError(System.Object,System.Boolean)">
+        <member name="M:Jerry.JerryDebug.LogError(System.Object,Jerry.JerryDebug.LogChannel,System.Boolean)">
             <summary>
             LOG
             </summary>
@@ -156,7 +152,7 @@
             <param name="list"></param>
             <param name="indent"></param>
         </member>
-        <member name="M:Jerry.JerryDebug.AddLog(System.Object,Jerry.JerryDebug.LogType,System.Boolean)">
+        <member name="M:Jerry.JerryDebug.AddLog(System.Object,Jerry.JerryDebug.LogType,Jerry.JerryDebug.LogChannel,System.Boolean)">
             <summary>
             AddLog
             </summary>
@@ -173,11 +169,6 @@
         <member name="M:Jerry.JerryDebug.FillBottomCtr">
             <summary>
             填充下面操作
-            </summary>
-        </member>
-        <member name="M:Jerry.JerryDebug.FillCtrButton">
-            <summary>
-            填充控制面板
             </summary>
         </member>
         <member name="M:Jerry.JerryDebug.RefreshUI(System.Int32)">
