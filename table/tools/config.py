@@ -40,4 +40,3 @@ class Config(object):
             with open(cs_path,'w') as f:
                 text = text.replace(pattern, target)
                 f.write(text)
-        

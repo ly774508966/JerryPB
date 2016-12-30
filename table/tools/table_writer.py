@@ -107,7 +107,7 @@ class TableWriter(object):
         except IOError:
             path = config.workbook_dir + '/' + workbook + '.xls'
             self.workbook = xlrd.open_workbook(path)
-        logger.info('打开工作簿|%s' % workbook)
+        #logger.info('打开工作簿|%s' % workbook)
 
         # 打开页签
         if type(sheet) == int or (type(sheet) == str and sheet.isdigit()):
@@ -156,7 +156,7 @@ class TableWriter(object):
         f.close()
 
     def deal_row_values(self, row_values):
-        logger.info('处理行数据|%s' % str(row_values))
+        #logger.info('处理行数据|%s' % str(row_values))
 
         row = self.row_array.rows.add()
         for descriptor in self.row_descriptor.fields:

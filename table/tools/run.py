@@ -13,9 +13,10 @@ logger = Logger(Logger.LEVEL_INFO, 'table_tools')
 que_table_path = Queue.Queue()
 que_to_data = Queue.Queue()
 que_to_cs = Queue.Queue()
+que_to_py = Queue.Queue()
 que_modify_cs = Queue.Queue()
-
-tables = []
+que_common_py = Queue.Queue()
+que_common_cs = Queue.Queue()
 
 class TaskInfo():
     def __init__(self, table, use_type):
@@ -80,6 +81,8 @@ def DeleteFile(path, pattern1, pattern2 = ''):
                 os.remove(file_path)
 
 def CleanProto(use_typ):
+    DeleteFile(config.proto_path, config.common_prefix, '.py')
+    DeleteFile(config.proto_path, config.common_prefix, '.pyc')
     if use_type == MyTableTool.USE_TYPE_ALL:
         DeleteFile(config.proto_path, '_table_', '.proto')
         # 下面两个文件不删除的话，表格文件命名大小写修改后，不会新创建解析文件
@@ -95,6 +98,7 @@ def CleanProto(use_typ):
         DeleteFile(config.proto_path, config.server_table_prefix, '.pyc')
 
 def CleanOutput(use_type):
+    DeleteFile(config.common_cs_path, '.cs')
     if use_type == MyTableTool.USE_TYPE_ALL:
         DeleteFile(config.table_cs_path, '.cs')
         DeleteFile(config.table_data_path, '.bytes')
@@ -104,20 +108,39 @@ def CleanOutput(use_type):
     elif use_type == MyTableTool.USE_TYPE_SERVER:
         DeleteFile(config.table_cs_path, '.cs', config.server_table_prefix)
         DeleteFile(config.table_data_path, '.bytes', config.server_table_prefix)
-    
-def FindTables(use_type, run_id):
+
+def FindCommon():
+    list = os.listdir(config.proto_path)
+    for filename in list:
+        if filename.find('.proto') != -1 and filename.startswith('common_'):
+            filenameWithoutExtension = os.path.splitext(filename)[0]
+            que_common_py.put(filenameWithoutExtension)
+
+def FindTables(use_type):
     list = os.listdir(config.table_path)
     for filename in list:
         if filename.find('.xlsx') != -1:
-            if run_id == 0:
-                table = MyTable(config.table_path + '\\' + filename)
-                if use_type == MyTableTool.USE_TYPE_CLIENT or use_type == MyTableTool.USE_TYPE_ALL:
-                    table.to_proto(MyTableTool.USE_TYPE_CLIENT)
-                if use_type == MyTableTool.USE_TYPE_SERVER or use_type == MyTableTool.USE_TYPE_ALL:
-                    table.to_proto(MyTableTool.USE_TYPE_SERVER)
-                tables.append(table)
-            else:
-                que_table_path.put(config.table_path + '\\' + filename)
+            que_table_path.put(config.table_path + '\\' + filename)
+
+class ThreadHandleCommon(threading.Thread):
+    def __init__(self, que, flag):
+        threading.Thread.__init__(self)
+        self.que = que
+        self.flag = flag
+    def run(self):
+        while True:
+            if self.flag == 0:
+                data = self.que.get()
+                Config.generate_proto_py_file(data)
+                que_common_cs.put(data)
+                self.que.task_done()
+            elif self.flag == 1:
+                data = self.que.get()
+                proto_name = '{}.proto'.format(data)
+                cs_path = '{}{}.cs'.format(config.common_cs_path + '/', data)
+                Config.proto_to_cs(proto_name, cs_path)
+                Config.delete_xml(cs_path)
+                self.que.task_done()
 
 class ThreadHandleTable(threading.Thread):
     F_PROTO = 0
@@ -142,10 +165,12 @@ class ThreadHandleTable(threading.Thread):
                     table.to_proto(MyTableTool.USE_TYPE_SERVER)
                     
                 if self.use_type == MyTableTool.USE_TYPE_CLIENT or self.use_type == MyTableTool.USE_TYPE_ALL:
-                    que_to_cs.put(TaskInfo(table, MyTableTool.USE_TYPE_CLIENT))
+                    que_to_py.put(TaskInfo(table, MyTableTool.USE_TYPE_CLIENT))
+		    que_to_cs.put(TaskInfo(table, MyTableTool.USE_TYPE_CLIENT))
                     que_modify_cs.put(TaskInfo(table, MyTableTool.USE_TYPE_CLIENT))
                 if self.use_type == MyTableTool.USE_TYPE_SERVER or self.use_type == MyTableTool.USE_TYPE_ALL:
-                    que_to_cs.put(TaskInfo(table, MyTableTool.USE_TYPE_SERVER))
+                    que_to_py.put(TaskInfo(table, MyTableTool.USE_TYPE_SERVER))
+		    que_to_cs.put(TaskInfo(table, MyTableTool.USE_TYPE_SERVER))
                     que_modify_cs.put(TaskInfo(table, MyTableTool.USE_TYPE_SERVER))
 
                 if self.use_type == MyTableTool.USE_TYPE_CLIENT or self.use_type == MyTableTool.USE_TYPE_ALL:
@@ -155,9 +180,19 @@ class ThreadHandleTable(threading.Thread):
                     
                 self.que.task_done()
             elif self.flag == self.F_CS:
-                data = self.que.get()
-                data.table.to_cs(data.use_type)
-                self.que.task_done()
+		if self.que.empty() == False:
+		    data = self.que.get()
+		    data.table.to_cs(data.use_type)
+		    self.que.task_done()
+		else:
+		    data = self.que2.get()
+		    table_prefix = ''
+		    if data.use_type == MyTableTool.USE_TYPE_CLIENT:
+                        table_prefix = config.client_table_prefix
+		    else:
+                        table_prefix = config.server_table_prefix
+		    Config.generate_proto_py_file('{}{}'.format(table_prefix, data.table.name))
+		    self.que2.task_done()
             elif self.flag == self.F_ALL:
                 if self.que.empty() == False:
                     data = self.que.get()
@@ -169,87 +204,67 @@ class ThreadHandleTable(threading.Thread):
                     self.que2.task_done()
             else:
                 continue
-            
-def RunSync(use_type):
-    FindTables(use_type, 0)
-    
-    work_path = os.getcwd()
-    os.chdir(config.proto_path)
-    for t in tables:
-        if use_type == MyTableTool.USE_TYPE_CLIENT or use_type == MyTableTool.USE_TYPE_ALL:
-            t.to_cs(MyTableTool.USE_TYPE_CLIENT)
-            t.modify_cs(MyTableTool.USE_TYPE_CLIENT)
-        if use_type == MyTableTool.USE_TYPE_SERVER or use_type == MyTableTool.USE_TYPE_ALL:
-            t.to_cs(MyTableTool.USE_TYPE_SERVER)
-            t.modify_cs(MyTableTool.USE_TYPE_SERVER)
-    
-    if use_type == MyTableTool.USE_TYPE_CLIENT or use_type == MyTableTool.USE_TYPE_ALL:
-        Config.generate_proto_py_file('c_table_*')
-    if use_type == MyTableTool.USE_TYPE_SERVER or use_type == MyTableTool.USE_TYPE_ALL:
-        Config.generate_proto_py_file('s_table_*')
-
-    os.chdir(work_path)
-    
-    for t in tables:
-        if use_type == MyTableTool.USE_TYPE_CLIENT or use_type == MyTableTool.USE_TYPE_ALL:
-            t.to_data(MyTableTool.USE_TYPE_CLIENT)
-        if use_type == MyTableTool.USE_TYPE_SERVER or use_type == MyTableTool.USE_TYPE_ALL:
-            t.to_data(MyTableTool.USE_TYPE_SERVER)
 
 def RunAsync(use_type):
-    for i in range(4):
+    work_path = os.getcwd()
+    
+    FindCommon()
+    
+    thread_cnt2 = que_common_py.qsize() / 2
+    if thread_cnt2 < 2:
+        thread_cnt2 = 2;
+    if thread_cnt2 > 20:
+        thread_cnt2 = 20
+
+    thread_cnt = que_table_path.qsize() / 3
+    if thread_cnt < 2:
+        thread_cnt = 2;
+    if thread_cnt > 20:
+        thread_cnt = 20
+
+    # gen common py
+    os.chdir(config.proto_path)
+    for i in range(thread_cnt2):
+        t = ThreadHandleCommon(que_common_py, 0)
+        t.setDaemon(True)
+        t.start()
+        
+    FindTables(use_type)
+    que_common_py.join()
+
+    # gen table proto
+    os.chdir(work_path)
+    for i in range(thread_cnt):
         t = ThreadHandleTable(use_type, ThreadHandleTable.F_PROTO, que_table_path, que_table_path)
         t.setDaemon(True)
         t.start()
-
-    FindTables(use_type, 1)
-    
     que_table_path.join()
-    
-    work_path = os.getcwd()
-    os.chdir(config.proto_path)
 
-    for i in range(4):
-        t = ThreadHandleTable(use_type, ThreadHandleTable.F_CS, que_to_cs, que_to_cs)
+    # gen cs, gen table py
+    os.chdir(config.proto_path)
+    for i in range(thread_cnt2):
+        t = ThreadHandleCommon(que_common_cs, 1)
         t.setDaemon(True)
         t.start()
-    
-    if use_type == MyTableTool.USE_TYPE_CLIENT or use_type == MyTableTool.USE_TYPE_ALL:
-        Config.generate_proto_py_file('c_table_*')
-    if use_type == MyTableTool.USE_TYPE_SERVER or use_type == MyTableTool.USE_TYPE_ALL:
-        Config.generate_proto_py_file('s_table_*')
+        
+    for i in range(thread_cnt):
+        t = ThreadHandleTable(use_type, ThreadHandleTable.F_CS, que_to_cs, que_to_py)
+        t.setDaemon(True)
+        t.start()
 
+    que_common_cs.join()
     que_to_cs.join()
-    os.chdir(work_path)
+    que_to_py.join()
 
-    for i in range(4):
+    # modify table cs, gen table data
+    os.chdir(work_path)
+    for i in range(thread_cnt):
         t = ThreadHandleTable(use_type, ThreadHandleTable.F_ALL, que_to_data, que_modify_cs)
         t.setDaemon(True)
         t.start()
     
     que_modify_cs.join()
     que_to_data.join()
-
-def CommonProto2CS():
-    work_path = os.getcwd()
-    os.chdir(config.proto_path)
-
-    DeleteFile(config.proto_path, config.common_prefix, '.py')
-    DeleteFile(config.proto_path, config.common_prefix, '.pyc')
-        
-    DeleteFile(config.common_cs_path, '.cs')
-    Config.generate_proto_py_file('common_*')
-    
-    list = os.listdir(config.proto_path)
-    for filename in list:
-        if filename.find('.proto') != -1 and filename.startswith('common_'):
-            filenameWithoutExtension = os.path.splitext(filename)[0]
-            proto_name = '{}.proto'.format(filenameWithoutExtension)
-            cs_path = '{}{}.cs'.format(config.common_cs_path + '/', filenameWithoutExtension)
-            Config.proto_to_cs(proto_name, cs_path)
-            Config.delete_xml(cs_path)
-
-    os.chdir(work_path)
 
 def CleanDir(dir_path, pattern = ''):
     if os.path.exists(dir_path) == False:
@@ -283,7 +298,7 @@ def CopyClientFile():
 
 if __name__ == '__main__':
     start_time = time.time()
-    
+    ttt = start_time
     reload(sys)
     sys.setdefaultencoding('utf-8')
 
@@ -311,10 +326,7 @@ if __name__ == '__main__':
     if use_type != MyTableTool.USE_TYPE_NONE:
         CleanProto(use_type)
         CleanOutput(use_type)
-        CommonProto2CS()
-        #RunSync(use_type)
         RunAsync(use_type)
-
     if do_copy == True:
         CopyClientFile()
 
