@@ -9,6 +9,22 @@
             单类最大日志量
             </summary>
         </member>
+        <member name="F:Jerry.JerryDebug.m_oneHeight">
+            <summary>
+            低端控制按钮高度
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_Active">
+            <summary>
+            是否启用
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug.m_ReceiveMsg">
+            <summary>
+            <para>是否接收消息</para>
+            <para>可以暂停接收消息</para>
+            </summary>
+        </member>
         <member name="F:Jerry.JerryDebug.m_OutScreen">
             <summary>
             输出到屏幕
@@ -29,17 +45,6 @@
             刷新OnGUI
             </summary>
         </member>
-        <member name="F:Jerry.JerryDebug.m_Active">
-            <summary>
-            是否启用
-            </summary>
-        </member>
-        <member name="F:Jerry.JerryDebug.m_ReceiveMsg">
-            <summary>
-            <para>是否接收消息</para>
-            <para>可以暂停接收消息</para>
-            </summary>
-        </member>
         <member name="F:Jerry.JerryDebug.m_LogDeleteByTime">
             <summary>
             多余日志按时间顺序删除
@@ -55,11 +60,6 @@
             按原始类型输出的类型，其他当做结构
             </summary>
         </member>
-        <member name="F:Jerry.JerryDebug._typeOfProtoMemberAttribute">
-            <summary>
-            typeof(ProtoBuf.ProtoMemberAttribute)
-            </summary>
-        </member>
         <member name="F:Jerry.JerryDebug.m_listMsgList">
             <summary>
             消息列表
@@ -68,11 +68,6 @@
         <member name="F:Jerry.JerryDebug.m_vtScrollView">
             <summary>
             Log面板当前浏览进度
-            </summary>
-        </member>
-        <member name="F:Jerry.JerryDebug.m_oneHeight">
-            <summary>
-            低端控制按钮高度
             </summary>
         </member>
         <member name="F:Jerry.JerryDebug.m_ShowNewer">
@@ -110,7 +105,7 @@
             帮助面板大小
             </summary>
         </member>
-        <member name="M:Jerry.JerryDebug.Set(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Type)">
+        <member name="M:Jerry.JerryDebug.Set(System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
             
             </summary>
@@ -119,7 +114,6 @@
             <param name="file"></param>
             <param name="editor"></param>
             <param name="isOnlyUseInEditor"></param>
-            <param name="typeOfProtoMemberAttribute">为了不依赖，独立设置，typeof(ProtoBuf.ProtoMemberAttribute)</param>
         </member>
         <member name="M:Jerry.JerryDebug.LogInfo(System.Object,Jerry.JerryDebug.LogChannel,System.Boolean)">
             <summary>
@@ -174,6 +168,11 @@
         <member name="M:Jerry.JerryDebug.RefreshUI(System.Int32)">
             <summary>
             刷新信息
+            </summary>
+        </member>
+        <member name="F:Jerry.JerryDebug._typeOfProtoMemberAttribute">
+            <summary>
+            typeof(ProtoBuf.ProtoMemberAttribute)
             </summary>
         </member>
         <member name="T:Jerry.JerryDebug.LogType">

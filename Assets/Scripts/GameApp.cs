@@ -12,7 +12,7 @@ public class GameApp : MonoBehaviour
 
     void Awake()
     {
-        JerryDebug.Inst.Set(true, false, false, true, false, typeof(ProtoBuf.ProtoMemberAttribute));
+        JerryDebug.Inst.Set(true, false, false, true, false);
 
 #if TableFromAB
         this.StartCoroutine(InitializeJAB(() =>
