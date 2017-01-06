@@ -23,29 +23,54 @@ namespace Jerry
         [MenuItem("Assets/JerryTable/PackAndCopy")]
         public static void PackAndCopyTables()
         {
-            DoPackTable(true, true, "PackAndCopyTables");
+            ExeCmd(1, true, "PackAndCopyTables");
         }
 
         [MenuItem("Assets/JerryTable/Pack")]
         public static void PackTables()
         {
-            DoPackTable(true, false, "PackTables");
+            ExeCmd(1, false, "PackTables");
         }
 
         [MenuItem("Assets/JerryTable/Copy")]
         public static void CopyTables()
         {
-            DoPackTable(false, true, "CopyTables");
+            ExeCmd(0, true, "CopyTables");
         }
 
-        private static void DoPackTable(bool pack = true, bool copy = false, string flag = "")
+        [MenuItem("Assets/JerryTable/PackCommand")]
+        public static void PackCommand()
+        {
+            ExeCmd(2, true, "PackCommand");
+        }
+
+        private static void ExeCmd(int cmd = 0, bool copy = false, string flag = "")
         {
             dir = Directory.GetCurrentDirectory();
             string toolsPath = dir + _toolsPath;
             try
             {
+                string cmdFile = "run.py";
+                string cmdPar = "";
+                switch (cmd)
+                {
+                    case 0:
+                    case 1:
+                        {
+                            cmdFile = "run.py";
+                            cmdPar = string.Format(" type-{0}_copy-{1}", cmd == 0 ? "none" : "client", copy ? "1" : "0");
+                        }
+                        break;
+                    case 2:
+                        {
+                            cmdFile = "packCmd.py";
+                            cmdPar = "";
+                        }
+                        break;
+                }
+                
                 Directory.SetCurrentDirectory(toolsPath);
-                CallProcess("python.exe", string.Format("{0}{1} type-{2}_copy-{3}", toolsPath, "run.py", pack ? "client" : "none", copy ? "1" : "0"));
+                CallProcess("python.exe", string.Format("{0}{1}{2}", toolsPath, cmdFile, cmdPar));
                 Directory.SetCurrentDirectory(dir);
             }
             catch (System.Exception ex)

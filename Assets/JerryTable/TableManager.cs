@@ -5,7 +5,6 @@ using System.IO;
 using System.Reflection;
 using System;
 
-//version: 2016-12-29-00
 namespace Jerry
 {
     public class Loader
