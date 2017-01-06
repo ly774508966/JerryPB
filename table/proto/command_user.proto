@@ -1,0 +1,21 @@
+package Cmd.User;
+
+enum CMD
+{
+    // 不允许枚举值重复
+    //option allow_alias                  = false;
+
+	// 无效的CMD
+	CMD_INVALID                           = 0xFFFF;
+	
+    CMD_BUY_ARENA_SHOP_GOODS_REQ = 0x2982;
+    CMD_BUY_ARENA_SHOP_GOODS_RSP = 0x2983;
+}
+
+enum RET
+{
+    RET_SYS_ERR         = -1;
+    RET_SUCCESS         = 0;
+
+    RET_MODULE_SWITCH_OFF              = 0x0100;   // 模块关闭
+}

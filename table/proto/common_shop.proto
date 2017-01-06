@@ -1,0 +1,11 @@
+package Common;
+
+message ArenaShop
+{
+    message Goods
+    {
+        optional uint32 id          = 1;
+        optional bool   purchased   = 2;
+    }
+    repeated Goods    goods_list        = 1;
+}

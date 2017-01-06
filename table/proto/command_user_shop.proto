@@ -1,0 +1,13 @@
+import "common_shop.proto";
+
+package Cmd.User;
+
+message BUY_ARENA_SHOP_GOODS_REQ
+{
+    optional uint32 idx = 1;
+}
+
+message BUY_ARENA_SHOP_GOODS_RSP
+{
+    repeated Common.ArenaShop.Goods goods_list = 1;
+}
