@@ -20,25 +20,28 @@ namespace Jerry
         /// </summary>
         private static string dir;
 
-        [MenuItem("Assets/JerryTable/PackAndCopy")]
+        [MenuItem("Assets/JerryPB/PackAndCopyTables")]
         public static void PackAndCopyTables()
         {
             ExeCmd(1, true, "PackAndCopyTables");
         }
 
-        [MenuItem("Assets/JerryTable/Pack")]
+        [MenuItem("Assets/JerryPB/PackTables")]
         public static void PackTables()
         {
             ExeCmd(1, false, "PackTables");
         }
 
-        [MenuItem("Assets/JerryTable/Copy")]
+        [MenuItem("Assets/JerryPB/CopyTables")]
         public static void CopyTables()
         {
             ExeCmd(0, true, "CopyTables");
         }
 
-        [MenuItem("Assets/JerryTable/PackCommand")]
+        /// <summary>
+        /// 打包协议
+        /// </summary>
+        [MenuItem("Assets/JerryPB/PackCommand")]
         public static void PackCommand()
         {
             ExeCmd(2, true, "PackCommand");

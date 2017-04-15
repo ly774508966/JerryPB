@@ -109,11 +109,11 @@
             <summary>
             
             </summary>
-            <param name="console"></param>
-            <param name="screen"></param>
-            <param name="file"></param>
-            <param name="editor"></param>
-            <param name="isOnlyUseInEditor"></param>
+            <param name="outConsole"></param>
+            <param name="outScreen"></param>
+            <param name="outFile"></param>
+            <param name="isNowEditor"></param>
+            <param name="onlyUseInEditor"></param>
         </member>
         <member name="M:Jerry.JerryDebug.LogInfo(System.Object,Jerry.JerryDebug.LogChannel,System.Boolean)">
             <summary>

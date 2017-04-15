@@ -17,9 +17,9 @@ public class MyTableLoader : TableLoader<MyTableLoader>
 #endif
     }
 
-    public override IEnumerator LoadTables(Action allTblComplete = null)
+    protected override IEnumerator IE_LoadTables(Action allTblComplete = null)
     {
-        yield return base.LoadTables(allTblComplete);
+        yield return base.IE_LoadTables(allTblComplete);
 
         foreach (Loader loader in _loaders)
         {

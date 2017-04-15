@@ -29,7 +29,7 @@ namespace Jerry
     public class TableLoader<T> : Singleton<T>
     {
         protected List<Loader> _loaders = new List<Loader>();
-        
+
         private Action _allTblComplete;
         private int _cnt;
 
@@ -56,7 +56,12 @@ namespace Jerry
             _loaders.Add(loader);
         }
 
-        public virtual IEnumerator LoadTables(Action allTblComplete = null)
+        public virtual void LoadTables(Action allTblComplete = null)
+        {
+            new CoroutineTask(IE_LoadTables(allTblComplete));
+        }
+
+        protected virtual IEnumerator IE_LoadTables(Action allTblComplete = null)
         {
             this._allTblComplete = allTblComplete;
             yield return null;

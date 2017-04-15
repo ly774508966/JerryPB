@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>JerryAB</name>
+        <name>JerryAB-IOS</name>
     </assembly>
     <members>
         <member name="T:Jerry.JABMgr">
@@ -102,6 +102,13 @@
             <param name="isAdditive"></param>
             <returns></returns>
         </member>
+        <member name="M:Jerry.JABMgr.Init(System.Action{System.Boolean},Jerry.JABUtil.Platform)">
+            <summary>
+            
+            </summary>
+            <param name="callback"></param>
+            <param name="platformName">平台名，只有编辑器起作用，真机DLL自动识别</param>
+        </member>
         <member name="M:Jerry.JABMgr.LoadManifest">
             <summary>
             加载Manifest
@@ -159,22 +166,13 @@
         </member>
         <member name="F:Jerry.JABUtil.CurPlatform">
             <summary>
-            当前平台
+            当前平台，决定AB的Manifest文件名
             </summary>
         </member>
-        <member name="T:Jerry.JABUtil.JPlatformName">
+        <member name="T:Jerry.JABUtil.Platform">
             <summary>
-            平台
+            平台，决定AB的Manifest文件名
             </summary>
-        </member>
-        <member name="M:Jerry.BuildScript.FileNameFilter(System.String,System.Collections.Generic.List{System.String},System.Boolean)">
-            <summary>
-            文件名过滤
-            </summary>
-            <param name="fileName"></param>
-            <param name="fileNameFilter"></param>
-            <param name="include"></param>
-            <returns>通过</returns>
         </member>
         <member name="T:Jerry.JABLoadOperation">
             <summary>
