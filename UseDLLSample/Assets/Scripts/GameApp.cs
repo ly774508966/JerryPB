@@ -21,7 +21,7 @@ public class GameApp : MonoBehaviour
 #else
         MyTableLoader.Inst.LoadTables(() =>
         {
-            GameStart();
+            GameLogicStart();
         });
 #endif
     }
