@@ -1,11 +1,8 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Jerry;
 
 public class GameApp : MonoBehaviour
 {
-    private bool _isTableOK = false;
-
     void Awake()
     {
         JerryDebug.Inst.Set(true, false, false, true, false);
@@ -15,32 +12,25 @@ public class GameApp : MonoBehaviour
         {
             if (success)
             {
-                this.StartCoroutine(MyTableLoader.Inst.LoadTables(() =>
+                MyTableLoader.Inst.LoadTables(() =>
                 {
-                    _isTableOK = true;
-                }));
+                    GameLogicStart();
+                });
             }
         }, JABUtil.Platform.Android);
 #else
-        this.StartCoroutine(MyTableLoader.Inst.LoadTables(() =>
+        MyTableLoader.Inst.LoadTables(() =>
         {
-            _isTableOK = true;
-        }));
+            GameStart();
+        });
 #endif
     }
 
     void Start()
     {
-        this.StartCoroutine(WaitResOK());
     }
 
-    private IEnumerator WaitResOK()
-    {
-        yield return new WaitUntil(() => this._isTableOK == true);
-        GameStart();
-    }
-
-    private void GameStart()
+    private void GameLogicStart()
     {
         Table.TestA testA = null;
         if (TestATblMgr.Inst.TryGetValue(10000, out testA))
