@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 7c8471455f66da145b63c77861305898
-timeCreated: 1482644052
+guid: 4d639ce8f8c090f4c807c9d04d0fc6db
+timeCreated: 1492247721
 licenseType: Pro
 PluginImporter:
   serializedVersion: 1
@@ -9,10 +9,10 @@ PluginImporter:
   isPreloaded: 0
   platformData:
     Any:
-      enabled: 1
+      enabled: 0
       settings: {}
     Editor:
-      enabled: 0
+      enabled: 1
       settings:
         DefaultValueInitialized: true
     WindowsStoreApps:
