@@ -1,17 +1,20 @@
 项目 | 内容
 ---|---
-标题 | ProtobufTools
-标签 | ProtobufTools、Protobuf、Unity、表格
-备注 | 对Unity无依赖
-最近更新 | 2016-12-25 00:35:32
+标题 | JerryPB
+标签 | Protobuf、Unity、表格
+备注 | 对Unity无依赖，[Github](https://github.com/laijingfeng/JerryPB)
+更新 | 2017-04-15 12:08:46
 
-## 使用
+[TOC]
 
-使用步骤：（具体见样例工程，包括DLL工程和源码工程）
-- 把工具放到`Assets`平行位置，工具说明见`补充:工具`
-- `Unity`工程的`Plugins`里加入`JerryTable.dll`和`protobuf-net.dll`
+# 使用
+
+## 使用步骤：（具体见样例工程，包括DLL工程和源码工程）
+
+- 把工具放到`Assets`平行目录，工具说明见`补充:工具`
+- `Unity`工程的`Plugins`里加入`JerryTable.dll`、`protobuf-net.dll`、`Singleton.dll`（依赖）
 - 新建一个Excel表，放到table文件夹，建议用英文命名
-    - Excel文件代表的是表集合，同系统的表可以放一个Excel文件，里边的一个Sheet才是一个具体的表
+    - Excel文件代表的是表集合，关联的多个的表可以放到一个Excel文件，里边的一个Sheet才是一个具体的表
     - 新建一个Sheet，命名为`xx_name`，`xx`的值可以是（命名不合规则的默认是`none_name`）：
         - `all` 服务器和客户端都用
         - `client` 仅客户端用
@@ -20,9 +23,10 @@
     - 填充一个Sheet，格式如`补充:表格格式` 
 - 关闭所有要打的表所在的Excel文件
 - 配置`tools\config.py`中的
-    - `self.unity_table_cs_path`
-    - `self.unity_table_data_path`
-    - `self.unity_common_cs_path`
+    - `self.unity_table_cs_path` Unity中表格CS文件存储相对路径
+    - `self.unity_table_data_path` Unity中表格二进制文件存储相对路径
+    - `self.unity_common_cs_path` Unity中公共PB的CS文件存储相对路径
+    - `self.unity_command_cs_path` Unity中协议PB的CS文件存储相对路径
 - 运行Unity里的`Assets/JerryTable`下的指令进行打表，会自动拷贝到相应目录，更多见`补充:指令细节`
 - 使用：参考`GameApp.cs`和`MyTableLoader.cs`
     - `MyTableLoader.cs`注册新表，处理加载（你可以自定义选择用从Resources或AssetBundle加载）
@@ -31,24 +35,27 @@
 
 ---
 
-### 补充:工具
+## 补充:工具
 
 工具目录如下：
 - table
     - output 输出文件
+        - command_cs 协议类
+        - common_cs 公共库类
         - table_cs 表格解析类，和表格对应
         - table_data 表格数据，和表格对应
-        - common_cs 公共库类
     - proto
         - 表格：自动生成
-            - `c_table_xxx`客户端表
-            - `s_table_xxx`服务器表
+            - `c_table_xxx.proto`客户端表
+            - `s_table_xxx.proto`服务器表
         - 公共库
-            - `common_xxx`要手动写
+            - `common_xxx.proto`要手动写
+        - 备注：其他`.py`和`.pyc`是文件是工具生成的编译文件
     - table 表格文件
+        - `XXX.xlsx` 
     - tools 工具
 
-### 补充:表格格式
+## 补充:表格格式
 
 sint32 | `Common.EnumTest` | `List.uint32` | `Common.StructTest` | 说明
 ---|---|---|---|---
@@ -102,12 +109,12 @@ message StructTest
 }
 ```
 
-说明：枚举值需要填写默认值
+说明：枚举类型需要填写默认值
 
-### 补充:指令细节
+## 补充:指令细节
 
 指令运行的是`tools\run.py`，可以手动运行：
-- 运行`tools\run_type-client_copy--py`，log在`table_tools.log`
+- 运行`tools\run_type-client_copy-0.py`，log在`table_tools.log`
     - 参数说明
         - type 打表类型，这里打客户端表
         - copy 是否拷贝到Unity工程，这是设置：`是`
